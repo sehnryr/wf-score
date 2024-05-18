@@ -3,16 +3,7 @@ use super::common::*;
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct ConditionOverload {
     /// The % of the total damage that a status must have to count as a condition
-    ///
-    /// Default is 0.0
     pub threshold: f32,
-}
-
-impl ConditionOverload {
-    pub fn threshold(mut self, threshold: f32) -> Self {
-        self.threshold = threshold;
-        self
-    }
 }
 
 #[modifier]
