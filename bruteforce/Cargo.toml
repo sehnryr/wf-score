@@ -1,0 +1,13 @@
+[package]
+name = "bruteforce"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+itertools = "0.12.1"
+wf-mods = { path = "../wf-mods" }
+wf-score = { path = "../wf-score" }
+wf-stats = { path = "../wf-stats" }

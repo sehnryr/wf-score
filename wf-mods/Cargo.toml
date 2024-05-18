@@ -1,0 +1,12 @@
+[package]
+name = "wf-mods"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lazy_static = "1.4.0"
+wf-modifier-proc-macro = { path = "../wf-modifier-proc-macro" }
+wf-stats = { path = "../wf-stats" }

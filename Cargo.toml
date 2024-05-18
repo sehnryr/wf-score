@@ -1,0 +1,15 @@
+[workspace]
+resolver = "2"
+members = [
+    "bruteforce",
+    "single-score",
+    "wf-modifier-proc-macro",
+    "wf-mods",
+    "wf-score",
+    "wf-stats",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+publish = false
