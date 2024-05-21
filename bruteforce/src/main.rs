@@ -2,7 +2,7 @@ mod mod_combinations;
 mod riven;
 
 use wf_mods::melee::*;
-use wf_score::melee_influence_dps;
+use wf_score::{melee_influence_dph, melee_influence_dps};
 use wf_stats::*;
 
 use crate::mod_combinations::ModCombinations;
@@ -51,16 +51,19 @@ fn main() {
     ];
 
     let other_mods = vec![
-        MeleeMod::GladiatorMight,
+        MeleeMod::GladiatorMight(12),
         MeleeMod::SacrificialSteel,
         MeleeMod::OrganShatter,
         MeleeMod::ConditionOverload(0.2),
+        MeleeMod::SmiteGrineer,
+        MeleeMod::PrimedSmiteGrineer,
     ];
 
-    let obligatory_mods = vec![
+    let obligatory_mods: Vec<MeleeMod> = vec![
         MeleeMod::BerserkerFury,
-        MeleeMod::BloodRush,
-        MeleeMod::WeepingWounds,
+        MeleeMod::BloodRush(12),
+        MeleeMod::WeepingWounds(12),
+        // MeleeMod::ConditionOverload(0.2),
     ];
 
     let (best_build, best_score) = bruteforce(
@@ -108,8 +111,14 @@ fn bruteforce(
     let mut best_score = 0.0;
 
     for n in 1..=3 {
-        let mod_combinations =
-            ModCombinations::new(n, &status_mods, &other_mods, &riven_mods, &obligatory_mods);
+        let mod_combinations = ModCombinations::new(
+            n,
+            7,
+            &status_mods,
+            &other_mods,
+            &riven_mods,
+            &obligatory_mods,
+        );
 
         for build in mod_combinations {
             let mut weapon = melee.clone();

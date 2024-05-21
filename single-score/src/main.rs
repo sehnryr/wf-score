@@ -24,8 +24,8 @@ fn main() {
         // MeleeMod::PrimedSmiteGrineer,
         MeleeMod::OrganShatter,
         MeleeMod::ConditionOverload(0.2),
-        MeleeMod::BloodRush,
-        MeleeMod::WeepingWounds,
+        MeleeMod::BloodRush(12),
+        MeleeMod::WeepingWounds(12),
     ];
 
     for modifier in build {

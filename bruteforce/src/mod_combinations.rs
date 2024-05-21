@@ -20,6 +20,7 @@ pub struct ModCombinations<'a> {
 impl<'a> ModCombinations<'a> {
     pub fn new(
         status_mod_count: usize,
+        mod_count: usize,
         status_mods: &'a [MeleeMod],
         other_mods: &'a [MeleeMod],
         riven_mods: &'a [MeleeMod],
@@ -29,7 +30,11 @@ impl<'a> ModCombinations<'a> {
 
         let status_mods_iterator = status_mods.iter().permutations(status_mod_count);
         let other_mods_iterator = other_mods.iter().combinations(
-            8 - status_mod_count - obligatory_mods.len() - if are_riven_mods { 1 } else { 0 },
+            (mod_count as isize
+                - status_mod_count as isize
+                - obligatory_mods.len() as isize
+                - if are_riven_mods { 1 } else { 0 })
+            .max(0) as usize,
         );
         let riven_mods_iterator = riven_mods.iter();
 

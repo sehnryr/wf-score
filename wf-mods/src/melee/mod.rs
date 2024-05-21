@@ -60,14 +60,18 @@ use common::*;
 #[derive(Debug, Clone, PartialEq)]
 pub enum MeleeMod {
     BerserkerFury,
-    BloodRush,
+
+    /// The combo multiplier of the weapon
+    BloodRush(u8),
 
     /// The % of the total damage that a status must have to count as a condition
     ConditionOverload(f32),
     FeverStrike,
     FocusEnergy,
     FocusRadon,
-    GladiatorMight,
+
+    /// The combo multiplier of the weapon
+    GladiatorMight(u8),
     MoltenImpact,
     NorthWind,
     OrganShatter,
@@ -83,7 +87,9 @@ pub enum MeleeMod {
     VirulentScourge,
     VolcanicEdge,
     VoltaicStrike,
-    WeepingWounds,
+
+    /// The combo multiplier of the weapon
+    WeepingWounds(u8),
 
     Riven(MeleeRiven),
 }
@@ -92,12 +98,12 @@ impl Into<Arc<dyn Modifier>> for MeleeMod {
     fn into(self) -> Arc<dyn Modifier> {
         match self {
             Self::BerserkerFury => Arc::new(BerserkerFury {}),
-            Self::BloodRush => Arc::new(BloodRush {}),
+            Self::BloodRush(combo_multiplier) => Arc::new(BloodRush { combo_multiplier }),
             Self::ConditionOverload(threshold) => Arc::new(ConditionOverload { threshold }),
             Self::FeverStrike => Arc::new(FeverStrike {}),
             Self::FocusEnergy => Arc::new(FocusEnergy {}),
             Self::FocusRadon => Arc::new(FocusRadon {}),
-            Self::GladiatorMight => Arc::new(GladiatorMight {}),
+            Self::GladiatorMight(combo_multiplier) => Arc::new(GladiatorMight { combo_multiplier }),
             Self::MoltenImpact => Arc::new(MoltenImpact {}),
             Self::NorthWind => Arc::new(NorthWind {}),
             Self::OrganShatter => Arc::new(OrganShatter {}),
@@ -113,7 +119,7 @@ impl Into<Arc<dyn Modifier>> for MeleeMod {
             Self::VirulentScourge => Arc::new(VirulentScourge {}),
             Self::VolcanicEdge => Arc::new(VolcanicEdge {}),
             Self::VoltaicStrike => Arc::new(VoltaicStrike {}),
-            Self::WeepingWounds => Arc::new(WeepingWounds {}),
+            Self::WeepingWounds(combo_multiplier) => Arc::new(WeepingWounds { combo_multiplier }),
             Self::Riven(riven) => Arc::new(riven),
         }
     }
