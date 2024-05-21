@@ -47,7 +47,34 @@ impl WeaponModifiers for Melee {
     }
 }
 
-impl Weapon for Melee {
+impl Weapon for Melee
+where
+    Self: Default,
+{
+    fn fire_rate(&self) -> f32 {
+        Default::default()
+    }
+
+    fn ammo_maximum(&self) -> usize {
+        Default::default()
+    }
+
+    fn magazine_capacity(&self) -> usize {
+        Default::default()
+    }
+
+    fn multishot(&self) -> f32 {
+        Default::default()
+    }
+
+    fn reload_speed(&self) -> f32 {
+        Default::default()
+    }
+
+    fn reload_delay(&self) -> f32 {
+        Default::default()
+    }
+
     fn damage_bonus(&self) -> f32 {
         let mut damage_bonus = 0.0;
         for modifier in self.modifier_list.iter() {

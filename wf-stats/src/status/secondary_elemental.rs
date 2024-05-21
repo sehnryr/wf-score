@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, Copy, PartialEq)]
-pub enum Secondary {
+pub enum SecondaryElemental {
     Blast(f32),
     Corrosive(f32),
     Gas(f32),
@@ -8,7 +8,7 @@ pub enum Secondary {
     Viral(f32),
 }
 
-impl Secondary {
+impl SecondaryElemental {
     pub fn damage(&self) -> f32 {
         match self {
             Self::Blast(blast) => *blast,

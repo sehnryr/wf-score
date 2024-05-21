@@ -1,5 +1,5 @@
 use wf_mods::melee::*;
-use wf_score::melee_influence_dps;
+use wf_score::melee::melee_influence_dps;
 use wf_stats::*;
 
 fn main() {

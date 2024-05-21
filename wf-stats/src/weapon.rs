@@ -20,7 +20,39 @@ pub trait Weapon {
     fn status_chance(&self) -> f32;
 
     /// Returns the attack speed of the weapon with all modifiers applied.
+    ///
+    /// Note: This is a melee-specific modifier.
     fn attack_speed(&self) -> f32;
+
+    /// Returns the fire rate of the weapon with all modifiers applied.
+    ///
+    /// Note: This is a primary/secondary-specific modifier.
+    fn fire_rate(&self) -> f32;
+
+    /// Returns the additive ammo maximum of the weapon with all modifiers applied.
+    ///
+    /// Note: This is a primary/secondary-specific modifier.
+    fn ammo_maximum(&self) -> usize;
+
+    /// Returns the additive magazine capacity of the weapon with all modifiers applied.
+    ///
+    /// Note: This is a primary/secondary-specific modifier.
+    fn magazine_capacity(&self) -> usize;
+
+    /// Returns the additive multishot of the weapon with all modifiers applied.
+    ///
+    /// Note: This is a primary/secondary-specific modifier.
+    fn multishot(&self) -> f32;
+
+    /// Returns the additive reload speed of the weapon with all modifiers applied.
+    ///
+    /// Note: This is a primary/secondary-specific modifier.
+    fn reload_speed(&self) -> f32;
+
+    /// Returns the reload delay of the weapon.
+    /// 
+    /// Note: This is a secondary-specific modifier.
+    fn reload_delay(&self) -> f32;
 
     /// Returns the final statuses of the weapon.
     ///

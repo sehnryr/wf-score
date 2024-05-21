@@ -1,30 +1,32 @@
 use std::iter::Iterator;
 use std::slice::Iter;
+use std::sync::Arc;
 
 use itertools::{Combinations, Itertools, Permutations, Product};
+use wf_stats::Modifier;
 
-use wf_mods::melee::*;
-
-pub struct ModCombinations<'a> {
-    mods_iterator_with_riven: Option<
-        Product<
-            Product<Permutations<Iter<'a, MeleeMod>>, Combinations<Iter<'a, MeleeMod>>>,
-            Iter<'a, MeleeMod>,
-        >,
-    >,
+pub struct ModCombinations<'a, T>
+where
+    T: Clone + Into<Arc<dyn Modifier>>,
+{
+    mods_iterator_with_riven:
+        Option<Product<Product<Permutations<Iter<'a, T>>, Combinations<Iter<'a, T>>>, Iter<'a, T>>>,
     mods_iterator_without_riven:
-        Option<Product<Permutations<Iter<'a, MeleeMod>>, Combinations<Iter<'a, MeleeMod>>>>,
-    obligatory_mods: &'a [MeleeMod],
+        Option<Product<Permutations<Iter<'a, T>>, Combinations<Iter<'a, T>>>>,
+    obligatory_mods: &'a [T],
 }
 
-impl<'a> ModCombinations<'a> {
+impl<'a, T> ModCombinations<'a, T>
+where
+    T: Clone + Into<Arc<dyn Modifier>>,
+{
     pub fn new(
         status_mod_count: usize,
         mod_count: usize,
-        status_mods: &'a [MeleeMod],
-        other_mods: &'a [MeleeMod],
-        riven_mods: &'a [MeleeMod],
-        obligatory_mods: &'a [MeleeMod],
+        status_mods: &'a [T],
+        other_mods: &'a [T],
+        riven_mods: &'a [T],
+        obligatory_mods: &'a [T],
     ) -> Self {
         let are_riven_mods = riven_mods.len() > 0;
 
@@ -56,13 +58,16 @@ impl<'a> ModCombinations<'a> {
     }
 }
 
-impl<'a> Iterator for ModCombinations<'a> {
-    type Item = Vec<MeleeMod>;
+impl<'a, T> Iterator for ModCombinations<'a, T>
+where
+    T: Clone + Into<Arc<dyn Modifier>>,
+{
+    type Item = Vec<T>;
 
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(iter) = &mut self.mods_iterator_with_riven {
             iter.next().map(|((status_mods, other_mods), riven_mod)| {
-                let mut build = vec![];
+                let mut build: Vec<T> = vec![];
                 if status_mods.len() > 0 {
                     build.push(status_mods[0].clone());
                 }
@@ -76,7 +81,7 @@ impl<'a> Iterator for ModCombinations<'a> {
             })
         } else if let Some(iter) = &mut self.mods_iterator_without_riven {
             iter.next().map(|(status_mods, other_mods)| {
-                let mut build = vec![];
+                let mut build: Vec<T> = vec![];
                 build.extend(status_mods.iter().cloned().cloned());
                 build.extend(other_mods.iter().cloned().cloned());
                 build.extend(self.obligatory_mods.iter().cloned());

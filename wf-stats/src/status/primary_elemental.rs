@@ -1,12 +1,12 @@
 #[derive(Debug, Clone, Copy, PartialEq)]
-pub enum Elemental {
+pub enum PrimaryElemental {
     Cold(f32),
     Electricity(f32),
     Heat(f32),
     Toxin(f32),
 }
 
-impl Elemental {
+impl PrimaryElemental {
     pub fn damage(&self) -> f32 {
         match self {
             Self::Cold(cold) => *cold,
