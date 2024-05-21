@@ -20,6 +20,13 @@ cargo run --release --package bruteforce
 The `--release` flag is optional, but recommended for performance reasons
 (especially for the `bruteforce` binary).
 
+## Build examples
+
+Here are some examples of builds I made using the `bruteforce` binary:
+- [Ceti Lacera](https://overframe.gg/build/666758/ceti-lacera/)
+- [Ceti Lacera w/ Riven](https://overframe.gg/build/668455/ceti-lacera/)
+- [Tenet Cycron w/ Riven](https://overframe.gg/build/669679/tenet-cycron/)
+
 ## License
 
 Licensed under the MIT license. See the [LICENSE](LICENSE) file for more
