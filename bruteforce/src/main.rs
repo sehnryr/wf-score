@@ -34,16 +34,8 @@ fn main() {
     let riven_mods: Vec<SecondaryMod> = {
         let disposition = tenet_cycron_riven_disposition;
         let mut riven_mods = Vec::new();
-        riven_mods.extend(generate_secondary_riven_combinations(
-            disposition,
-            2,
-            1.2375,
-        ));
-        riven_mods.extend(generate_secondary_riven_combinations(
-            disposition,
-            3,
-            0.9375,
-        ));
+        riven_mods.extend(generate_secondary_riven_combinations(disposition, 2, true));
+        riven_mods.extend(generate_secondary_riven_combinations(disposition, 3, true));
         riven_mods
     };
 

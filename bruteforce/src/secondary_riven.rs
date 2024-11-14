@@ -32,28 +32,7 @@ pub enum SecondaryRivenAttribute {
     ReloadSpeed(f32),
 }
 
-impl std::ops::Mul<f32> for SecondaryRivenAttribute {
-    type Output = Self;
-
-    fn mul(self, rhs: f32) -> Self::Output {
-        use SecondaryRivenAttribute::*;
-
-        match self {
-            Damage(value) => Damage(value * rhs),
-            CriticalChance(value) => CriticalChance(value * rhs),
-            CriticalMultiplier(value) => CriticalMultiplier(value * rhs),
-            Status(status) => Status(status * rhs),
-            StatusChance(value) => StatusChance(value * rhs),
-            FireRate(value) => FireRate(value * rhs),
-            AmmoMaximum(value) => AmmoMaximum(value * rhs),
-            MagazineCapacity(value) => MagazineCapacity(value * rhs),
-            Multishot(value) => Multishot(value * rhs),
-            ReloadSpeed(value) => ReloadSpeed(value * rhs),
-        }
-    }
-}
-
-impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryMod {
+impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryRiven {
     fn from_iter<T: IntoIterator<Item = &'a SecondaryRivenAttribute>>(iter: T) -> Self {
         use SecondaryRivenAttribute::*;
 
@@ -83,7 +62,7 @@ impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryMod {
             }
         }
 
-        SecondaryMod::Riven(SecondaryRiven::new(
+        SecondaryRiven::new(
             damage,
             critical_chance,
             critical_multiplier,
@@ -94,7 +73,7 @@ impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryMod {
             reload_speed,
             status_chance,
             status_list,
-        ))
+        )
     }
 }
 
@@ -104,16 +83,23 @@ impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryMod {
 ///
 /// * `disposition` - The riven disposition of the weapon
 /// * `attribute_count` - The number of attributes in the riven
-/// * `bonus` - The bonus relative to the number of positive attributes (and negative attributes)
+/// * `has_negative` - Whether the riven has a negative attribute (used for bonus calculation)
 pub fn generate_secondary_riven_combinations(
     disposition: f32,
     attribute_count: usize,
-    bonus: f32,
-) -> Vec<SecondaryMod> {
+    has_negative: bool,
+) -> impl Iterator<Item = SecondaryMod> {
+    let bonus = match (attribute_count, has_negative) {
+        (2, false) => 0.99,
+        (2, true) => 1.2375,
+        (3, false) => 0.75,
+        (3, true) => 0.9375,
+        _ => panic!("Invalid attribute count"),
+    };
+
     SECONDARY_RIVEN_BASE_BONUS_LIST
-        .map(|attribute| attribute * disposition * bonus)
         .iter()
         .combinations(attribute_count)
         .map(|c| c.into_iter().collect())
-        .collect()
+        .map(move |riven: SecondaryRiven| SecondaryMod::Riven(riven * disposition * bonus))
 }

@@ -24,24 +24,7 @@ pub enum MeleeRivenAttribute {
     AttackSpeed(f32),
 }
 
-impl std::ops::Mul<f32> for MeleeRivenAttribute {
-    type Output = Self;
-
-    fn mul(self, rhs: f32) -> Self::Output {
-        use MeleeRivenAttribute::*;
-
-        match self {
-            CriticalChance(value) => CriticalChance(value * rhs),
-            CriticalMultiplier(value) => CriticalMultiplier(value * rhs),
-            Damage(value) => Damage(value * rhs),
-            Status(status) => Status(status * rhs),
-            StatusChance(value) => StatusChance(value * rhs),
-            AttackSpeed(value) => AttackSpeed(value * rhs),
-        }
-    }
-}
-
-impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeMod {
+impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeRiven {
     fn from_iter<T: IntoIterator<Item = &'a MeleeRivenAttribute>>(iter: T) -> Self {
         use MeleeRivenAttribute::*;
 
@@ -63,14 +46,14 @@ impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeMod {
             }
         }
 
-        MeleeMod::Riven(MeleeRiven::new(
+        MeleeRiven::new(
             damage,
             critical_chance,
             critical_multiplier,
             status_chance,
             attack_speed,
             status_list,
-        ))
+        )
     }
 }
 
@@ -80,16 +63,23 @@ impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeMod {
 ///
 /// * `disposition` - The riven disposition of the weapon
 /// * `attribute_count` - The number of attributes in the riven
-/// * `bonus` - The bonus relative to the number of positive attributes (and negative attributes)
+/// * `has_negative` - Whether the riven has a negative attribute (used for bonus calculation)
 pub fn generate_melee_riven_combinations(
     disposition: f32,
     attribute_count: usize,
-    bonus: f32,
-) -> Vec<MeleeMod> {
+    has_negative: bool,
+) -> impl Iterator<Item = MeleeMod> {
+    let bonus = match (attribute_count, has_negative) {
+        (2, false) => 0.99,
+        (2, true) => 1.2375,
+        (3, false) => 0.75,
+        (3, true) => 0.9375,
+        _ => panic!("Invalid attribute count"),
+    };
+
     MELEE_RIVEN_BASE_BONUS_LIST
-        .map(|attribute| attribute * disposition * bonus)
         .iter()
         .combinations(attribute_count)
         .map(|c| c.into_iter().collect())
-        .collect()
+        .map(move |riven: MeleeRiven| MeleeMod::Riven(riven * disposition * bonus))
 }
