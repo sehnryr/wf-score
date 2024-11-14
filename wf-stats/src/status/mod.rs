@@ -30,55 +30,55 @@ impl Status {
         }
     }
 
-    pub fn impact(impact: f32) -> Self {
+    pub const fn impact(impact: f32) -> Self {
         Self::Physical(Physical::Impact(impact))
     }
 
-    pub fn puncture(puncture: f32) -> Self {
+    pub const fn puncture(puncture: f32) -> Self {
         Self::Physical(Physical::Puncture(puncture))
     }
 
-    pub fn slash(slash: f32) -> Self {
+    pub const fn slash(slash: f32) -> Self {
         Self::Physical(Physical::Slash(slash))
     }
 
-    pub fn cold(cold: f32) -> Self {
+    pub const fn cold(cold: f32) -> Self {
         Self::PrimaryElemental(PrimaryElemental::Cold(cold))
     }
 
-    pub fn electricity(electricity: f32) -> Self {
+    pub const fn electricity(electricity: f32) -> Self {
         Self::PrimaryElemental(PrimaryElemental::Electricity(electricity))
     }
 
-    pub fn heat(heat: f32) -> Self {
+    pub const fn heat(heat: f32) -> Self {
         Self::PrimaryElemental(PrimaryElemental::Heat(heat))
     }
 
-    pub fn toxin(toxin: f32) -> Self {
+    pub const fn toxin(toxin: f32) -> Self {
         Self::PrimaryElemental(PrimaryElemental::Toxin(toxin))
     }
 
-    pub fn blast(blast: f32) -> Self {
+    pub const fn blast(blast: f32) -> Self {
         Self::SecondaryElemental(SecondaryElemental::Blast(blast))
     }
 
-    pub fn corrosive(corrosive: f32) -> Self {
+    pub const fn corrosive(corrosive: f32) -> Self {
         Self::SecondaryElemental(SecondaryElemental::Corrosive(corrosive))
     }
 
-    pub fn gas(gas: f32) -> Self {
+    pub const fn gas(gas: f32) -> Self {
         Self::SecondaryElemental(SecondaryElemental::Gas(gas))
     }
 
-    pub fn magnetic(magnetic: f32) -> Self {
+    pub const fn magnetic(magnetic: f32) -> Self {
         Self::SecondaryElemental(SecondaryElemental::Magnetic(magnetic))
     }
 
-    pub fn radiation(radiation: f32) -> Self {
+    pub const fn radiation(radiation: f32) -> Self {
         Self::SecondaryElemental(SecondaryElemental::Radiation(radiation))
     }
 
-    pub fn viral(viral: f32) -> Self {
+    pub const fn viral(viral: f32) -> Self {
         Self::SecondaryElemental(SecondaryElemental::Viral(viral))
     }
 }
