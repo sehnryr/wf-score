@@ -150,7 +150,7 @@ where
         for modifier in self.modifier_list.iter() {
             reload_speed += modifier.reload_speed(self);
         }
-        self.reload_time * (1.0 + reload_speed)
+        self.reload_time / (1.0 + reload_speed)
     }
 
     fn reload_delay(&self) -> f32 {
