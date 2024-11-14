@@ -1,9 +1,20 @@
-use std::slice::Iter;
-
 use itertools::Itertools;
 use wf_mods::melee::*;
 use wf_stats::*;
 
+const MELEE_RIVEN_BASE_BONUS_LIST: [MeleeRivenAttribute; 9] = [
+    MeleeRivenAttribute::CriticalChance(1.80),
+    MeleeRivenAttribute::CriticalMultiplier(0.9),
+    MeleeRivenAttribute::Damage(1.647),
+    MeleeRivenAttribute::Status(Status::cold(0.9)),
+    MeleeRivenAttribute::Status(Status::electricity(0.9)),
+    MeleeRivenAttribute::Status(Status::heat(0.9)),
+    MeleeRivenAttribute::Status(Status::toxin(0.9)),
+    MeleeRivenAttribute::StatusChance(0.9),
+    MeleeRivenAttribute::AttackSpeed(0.549),
+];
+
+#[derive(Clone, Debug)]
 pub enum MeleeRivenAttribute {
     CriticalChance(f32),
     CriticalMultiplier(f32),
@@ -13,22 +24,27 @@ pub enum MeleeRivenAttribute {
     AttackSpeed(f32),
 }
 
-impl MeleeRivenAttribute {
-    pub fn bonus_list(disposition: f32, bonus: f32) -> [MeleeRivenAttribute; 9] {
-        [
-            MeleeRivenAttribute::CriticalChance(1.80 * disposition * bonus),
-            MeleeRivenAttribute::CriticalMultiplier(0.9 * disposition * bonus),
-            MeleeRivenAttribute::Damage(1.647 * disposition * bonus),
-            MeleeRivenAttribute::Status(Status::cold(0.9 * disposition * bonus)),
-            MeleeRivenAttribute::Status(Status::electricity(0.9 * disposition * bonus)),
-            MeleeRivenAttribute::Status(Status::heat(0.9 * disposition * bonus)),
-            MeleeRivenAttribute::Status(Status::toxin(0.9 * disposition * bonus)),
-            MeleeRivenAttribute::StatusChance(0.9 * disposition * bonus),
-            MeleeRivenAttribute::AttackSpeed(0.549 * disposition * bonus),
-        ]
-    }
+impl std::ops::Mul<f32> for MeleeRivenAttribute {
+    type Output = Self;
 
-    pub fn to_melee_riven(attributes: Iter<&MeleeRivenAttribute>) -> MeleeMod {
+    fn mul(self, rhs: f32) -> Self::Output {
+        use MeleeRivenAttribute::*;
+
+        match self {
+            CriticalChance(value) => CriticalChance(value * rhs),
+            CriticalMultiplier(value) => CriticalMultiplier(value * rhs),
+            Damage(value) => Damage(value * rhs),
+            Status(status) => Status(status * rhs),
+            StatusChance(value) => StatusChance(value * rhs),
+            AttackSpeed(value) => AttackSpeed(value * rhs),
+        }
+    }
+}
+
+impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeMod {
+    fn from_iter<T: IntoIterator<Item = &'a MeleeRivenAttribute>>(iter: T) -> Self {
+        use MeleeRivenAttribute::*;
+
         let mut critical_chance = 0.0;
         let mut critical_multiplier = 0.0;
         let mut damage = 0.0;
@@ -36,14 +52,14 @@ impl MeleeRivenAttribute {
         let mut attack_speed = 0.0;
         let mut status_list = Vec::new();
 
-        for attribute in attributes {
+        for attribute in iter {
             match attribute {
-                MeleeRivenAttribute::CriticalChance(value) => critical_chance = *value,
-                MeleeRivenAttribute::CriticalMultiplier(value) => critical_multiplier = *value,
-                MeleeRivenAttribute::Damage(value) => damage = *value,
-                MeleeRivenAttribute::Status(status) => status_list.push(status.clone()),
-                MeleeRivenAttribute::StatusChance(value) => status_chance = *value,
-                MeleeRivenAttribute::AttackSpeed(value) => attack_speed = *value,
+                CriticalChance(value) => critical_chance = *value,
+                CriticalMultiplier(value) => critical_multiplier = *value,
+                Damage(value) => damage = *value,
+                Status(status) => status_list.push(*status),
+                StatusChance(value) => status_chance = *value,
+                AttackSpeed(value) => attack_speed = *value,
             }
         }
 
@@ -70,9 +86,10 @@ pub fn generate_melee_riven_combinations(
     attribute_count: usize,
     bonus: f32,
 ) -> Vec<MeleeMod> {
-    MeleeRivenAttribute::bonus_list(disposition, bonus)
+    MELEE_RIVEN_BASE_BONUS_LIST
+        .map(|attribute| attribute * disposition * bonus)
         .iter()
         .combinations(attribute_count)
-        .map(|c| MeleeRivenAttribute::to_melee_riven(c.iter()))
+        .map(|c| c.into_iter().collect())
         .collect()
 }

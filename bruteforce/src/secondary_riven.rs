@@ -1,9 +1,24 @@
-use std::slice::Iter;
-
 use itertools::Itertools;
 use wf_mods::secondary::*;
 use wf_stats::*;
 
+const SECONDARY_RIVEN_BASE_BONUS_LIST: [SecondaryRivenAttribute; 13] = [
+    SecondaryRivenAttribute::CriticalChance(1.4999),
+    SecondaryRivenAttribute::CriticalMultiplier(0.9),
+    SecondaryRivenAttribute::Damage(2.196),
+    SecondaryRivenAttribute::Status(Status::cold(0.9)),
+    SecondaryRivenAttribute::Status(Status::electricity(0.9)),
+    SecondaryRivenAttribute::Status(Status::heat(0.9)),
+    SecondaryRivenAttribute::Status(Status::toxin(0.9)),
+    SecondaryRivenAttribute::StatusChance(0.9),
+    SecondaryRivenAttribute::FireRate(0.747),
+    SecondaryRivenAttribute::AmmoMaximum(0.9),
+    SecondaryRivenAttribute::MagazineCapacity(0.5),
+    SecondaryRivenAttribute::Multishot(1.197),
+    SecondaryRivenAttribute::ReloadSpeed(0.5),
+];
+
+#[derive(Clone, Debug)]
 pub enum SecondaryRivenAttribute {
     Damage(f32),
     CriticalChance(f32),
@@ -17,26 +32,31 @@ pub enum SecondaryRivenAttribute {
     ReloadSpeed(f32),
 }
 
-impl SecondaryRivenAttribute {
-    pub fn bonus_list(disposition: f32, bonus: f32) -> [SecondaryRivenAttribute; 13] {
-        [
-            SecondaryRivenAttribute::CriticalChance(1.4999 * disposition * bonus),
-            SecondaryRivenAttribute::CriticalMultiplier(0.9 * disposition * bonus),
-            SecondaryRivenAttribute::Damage(2.196 * disposition * bonus),
-            SecondaryRivenAttribute::Status(Status::cold(0.9 * disposition * bonus)),
-            SecondaryRivenAttribute::Status(Status::electricity(0.9 * disposition * bonus)),
-            SecondaryRivenAttribute::Status(Status::heat(0.9 * disposition * bonus)),
-            SecondaryRivenAttribute::Status(Status::toxin(0.9 * disposition * bonus)),
-            SecondaryRivenAttribute::StatusChance(0.9 * disposition * bonus),
-            SecondaryRivenAttribute::FireRate(0.747 * disposition * bonus),
-            SecondaryRivenAttribute::AmmoMaximum(0.9 * disposition * bonus),
-            SecondaryRivenAttribute::MagazineCapacity(0.5 * disposition * bonus),
-            SecondaryRivenAttribute::Multishot(1.197 * disposition * bonus),
-            SecondaryRivenAttribute::ReloadSpeed(0.5 * disposition * bonus),
-        ]
-    }
+impl std::ops::Mul<f32> for SecondaryRivenAttribute {
+    type Output = Self;
 
-    pub fn to_secondary_riven(attributes: Iter<&SecondaryRivenAttribute>) -> SecondaryMod {
+    fn mul(self, rhs: f32) -> Self::Output {
+        use SecondaryRivenAttribute::*;
+
+        match self {
+            Damage(value) => Damage(value * rhs),
+            CriticalChance(value) => CriticalChance(value * rhs),
+            CriticalMultiplier(value) => CriticalMultiplier(value * rhs),
+            Status(status) => Status(status * rhs),
+            StatusChance(value) => StatusChance(value * rhs),
+            FireRate(value) => FireRate(value * rhs),
+            AmmoMaximum(value) => AmmoMaximum(value * rhs),
+            MagazineCapacity(value) => MagazineCapacity(value * rhs),
+            Multishot(value) => Multishot(value * rhs),
+            ReloadSpeed(value) => ReloadSpeed(value * rhs),
+        }
+    }
+}
+
+impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryMod {
+    fn from_iter<T: IntoIterator<Item = &'a SecondaryRivenAttribute>>(iter: T) -> Self {
+        use SecondaryRivenAttribute::*;
+
         let mut critical_chance = 0.0;
         let mut critical_multiplier = 0.0;
         let mut damage = 0.0;
@@ -48,18 +68,18 @@ impl SecondaryRivenAttribute {
         let mut status_chance = 0.0;
         let mut status_list = Vec::new();
 
-        for attribute in attributes {
+        for attribute in iter {
             match attribute {
-                SecondaryRivenAttribute::CriticalChance(value) => critical_chance = *value,
-                SecondaryRivenAttribute::CriticalMultiplier(value) => critical_multiplier = *value,
-                SecondaryRivenAttribute::Damage(value) => damage = *value,
-                SecondaryRivenAttribute::Status(status) => status_list.push(status.clone()),
-                SecondaryRivenAttribute::StatusChance(value) => status_chance = *value,
-                SecondaryRivenAttribute::FireRate(value) => fire_rate = *value,
-                SecondaryRivenAttribute::AmmoMaximum(value) => ammo_maximum = *value,
-                SecondaryRivenAttribute::MagazineCapacity(value) => magazine_capacity = *value,
-                SecondaryRivenAttribute::Multishot(value) => multishot = *value,
-                SecondaryRivenAttribute::ReloadSpeed(value) => reload_speed = *value,
+                CriticalChance(value) => critical_chance = *value,
+                CriticalMultiplier(value) => critical_multiplier = *value,
+                Damage(value) => damage = *value,
+                Status(status) => status_list.push(*status),
+                StatusChance(value) => status_chance = *value,
+                FireRate(value) => fire_rate = *value,
+                AmmoMaximum(value) => ammo_maximum = *value,
+                MagazineCapacity(value) => magazine_capacity = *value,
+                Multishot(value) => multishot = *value,
+                ReloadSpeed(value) => reload_speed = *value,
             }
         }
 
@@ -90,9 +110,10 @@ pub fn generate_secondary_riven_combinations(
     attribute_count: usize,
     bonus: f32,
 ) -> Vec<SecondaryMod> {
-    SecondaryRivenAttribute::bonus_list(disposition, bonus)
+    SECONDARY_RIVEN_BASE_BONUS_LIST
+        .map(|attribute| attribute * disposition * bonus)
         .iter()
         .combinations(attribute_count)
-        .map(|c| SecondaryRivenAttribute::to_secondary_riven(c.iter()))
+        .map(|c| c.into_iter().collect())
         .collect()
 }
