@@ -561,3 +561,33 @@ impl StatusesImpl for Vec<Status> {
         None
     }
 }
+
+impl std::ops::Add<f32> for Status {
+    type Output = Status;
+
+    fn add(mut self, other: f32) -> Status {
+        self.set_damage(self.damage() + other);
+        self
+    }
+}
+
+impl std::ops::AddAssign<f32> for Status {
+    fn add_assign(&mut self, other: f32) {
+        self.set_damage(self.damage() + other);
+    }
+}
+
+impl std::ops::Mul<f32> for Status {
+    type Output = Status;
+
+    fn mul(mut self, other: f32) -> Status {
+        self.set_damage(self.damage() * other);
+        self
+    }
+}
+
+impl std::ops::MulAssign<f32> for Status {
+    fn mul_assign(&mut self, other: f32) {
+        self.set_damage(self.damage() * other);
+    }
+}
