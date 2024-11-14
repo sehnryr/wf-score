@@ -33,6 +33,7 @@ pub fn modifier(_: TokenStream, item: TokenStream) -> TokenStream {
         ("magazine_capacity", quote!(f32)),
         ("multishot", quote!(f32)),
         ("reload_speed", quote!(f32)),
+        ("cost", quote!(u8)),
     ];
 
     // Get the missing functions that are required to be implemented by the item implementation.

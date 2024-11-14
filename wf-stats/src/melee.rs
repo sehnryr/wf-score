@@ -166,4 +166,12 @@ where
     fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>> {
         &self.modifier_list
     }
+
+    fn cost(&self) -> u8 {
+        let mut cost = 0;
+        for modifier in self.modifier_list.iter() {
+            cost += modifier.cost(self);
+        }
+        cost
+    }
 }

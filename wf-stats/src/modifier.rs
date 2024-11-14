@@ -104,4 +104,10 @@ pub trait Modifier {
     ///
     /// Note: This is a primary/secondary-specific modifier.
     fn reload_speed(&self, context: &dyn Weapon) -> f32;
+
+    /// Returns the cost of the modifier.
+    ///
+    /// Example:
+    /// Split Chamber: 15
+    fn cost(&self, context: &dyn Weapon) -> u8;
 }

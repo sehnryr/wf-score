@@ -50,7 +50,7 @@ pub trait Weapon {
     fn reload_speed(&self) -> f32;
 
     /// Returns the reload delay of the weapon.
-    /// 
+    ///
     /// Note: This is a secondary-specific modifier.
     fn reload_delay(&self) -> f32;
 
@@ -62,4 +62,7 @@ pub trait Weapon {
 
     /// Returns the modifiers of the weapon.
     fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>>;
+
+    /// Returns the cost of the modifiers
+    fn cost(&self) -> u8;
 }
