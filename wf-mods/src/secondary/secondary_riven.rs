@@ -121,3 +121,26 @@ impl std::fmt::Debug for SecondaryRiven {
         f.finish()
     }
 }
+
+impl std::ops::Mul<f32> for SecondaryRiven {
+    type Output = Self;
+
+    fn mul(mut self, rhs: f32) -> Self::Output {
+        Self {
+            damage: self.damage * rhs,
+            critical_chance: self.critical_chance * rhs,
+            critical_multiplier: self.critical_multiplier * rhs,
+            fire_rate: self.fire_rate * rhs,
+            ammo_maximum: self.ammo_maximum * rhs,
+            magazine_capacity: self.magazine_capacity * rhs,
+            multishot: self.multishot * rhs,
+            reload_speed: self.reload_speed * rhs,
+            status_chance: self.status_chance * rhs,
+            status_list: self
+                .status_list
+                .drain(..)
+                .map(|status| status * rhs)
+                .collect(),
+        }
+    }
+}

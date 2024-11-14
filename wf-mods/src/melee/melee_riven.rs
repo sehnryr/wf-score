@@ -81,3 +81,22 @@ impl std::fmt::Debug for MeleeRiven {
         f.finish()
     }
 }
+
+impl std::ops::Mul<f32> for MeleeRiven {
+    type Output = Self;
+
+    fn mul(mut self, rhs: f32) -> Self::Output {
+        Self {
+            damage: self.damage * rhs,
+            critical_chance: self.critical_chance * rhs,
+            critical_multiplier: self.critical_multiplier * rhs,
+            status_chance: self.status_chance * rhs,
+            attack_speed: self.attack_speed * rhs,
+            status_list: self
+                .status_list
+                .drain(..)
+                .map(|status| status * rhs)
+                .collect(),
+        }
+    }
+}
