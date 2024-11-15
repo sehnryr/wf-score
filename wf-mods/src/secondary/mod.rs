@@ -8,7 +8,9 @@ mod creeping_bullseye;
 mod deep_freeze;
 mod expel_grineer;
 mod frostbite;
+mod galvanized_crosshairs;
 mod galvanized_diffusion;
+mod galvanized_shot;
 mod gunslinger;
 mod heated_charge;
 mod hollow_point;
@@ -40,7 +42,9 @@ pub use creeping_bullseye::*;
 pub use deep_freeze::*;
 pub use expel_grineer::*;
 pub use frostbite::*;
+pub use galvanized_crosshairs::*;
 pub use galvanized_diffusion::*;
+pub use galvanized_shot::*;
 pub use gunslinger::*;
 pub use heated_charge::*;
 pub use hollow_point::*;
@@ -91,7 +95,9 @@ pub enum SecondaryMod {
     PrimedPistolGambit,
     SharpenedBullet,
     BarrelDiffusion,
+    GalvanizedCrosshairs(u8),
     GalvanizedDiffusion(u8),
+    GalvanizedShot(f32),
     Gunslinger,
     Jolt,
     PistolGambit,
@@ -127,7 +133,9 @@ impl Into<Arc<dyn Modifier>> for SecondaryMod {
             Self::PrimedPistolGambit => Arc::new(PrimedPistolGambit {}),
             Self::SharpenedBullet => Arc::new(SharpenedBullet {}),
             Self::BarrelDiffusion => Arc::new(BarrelDiffusion {}),
+            Self::GalvanizedCrosshairs(stacks) => Arc::new(GalvanizedCrosshairs { stacks }),
             Self::GalvanizedDiffusion(stacks) => Arc::new(GalvanizedDiffusion { stacks }),
+            Self::GalvanizedShot(threshold) => Arc::new(GalvanizedShot { threshold }),
             Self::Gunslinger => Arc::new(Gunslinger {}),
             Self::Jolt => Arc::new(Jolt {}),
             Self::PistolGambit => Arc::new(PistolGambit {}),
