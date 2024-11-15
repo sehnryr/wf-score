@@ -64,5 +64,5 @@ pub trait Weapon {
     fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>>;
 
     /// Returns the cost of the modifiers
-    fn cost(&self) -> u8;
+    fn cost(&self, has_reactor: bool) -> u8;
 }

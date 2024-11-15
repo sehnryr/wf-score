@@ -167,10 +167,13 @@ where
         &self.modifier_list
     }
 
-    fn cost(&self) -> u8 {
+    fn cost(&self, has_reactor: bool) -> u8 {
         let mut cost = 0;
         for modifier in self.modifier_list.iter() {
-            cost += modifier.cost(self);
+            cost += match has_reactor {
+                true => modifier.cost(self).div_ceil(2u8),
+                false => modifier.cost(self),
+            };
         }
         cost
     }
