@@ -1,11 +1,13 @@
+#![allow(dead_code, unused_imports, unused_mut, unused_variables)]
+
 mod melee_riven;
 mod mod_combinations;
 mod secondary_riven;
 
 use wf_mods::melee::*;
 use wf_mods::secondary::*;
-use wf_score::melee::{melee_influence_dph, melee_influence_dps};
-use wf_score::secondary::cascadia_flare_dps;
+use wf_score::melee::*;
+use wf_score::secondary::*;
 use wf_stats::*;
 
 use crate::melee_riven::generate_melee_riven_combinations;
@@ -13,39 +15,37 @@ use crate::mod_combinations::ModCombinations;
 use crate::secondary_riven::generate_secondary_riven_combinations;
 
 fn main() {
-    let tenet_cycron = Secondary::new(
-        0.2,
-        1.8,
-        0.4,
-        12.0,
+    let dual_toxocyst = Secondary::new(
+        // Incarnon Genesis 4th evolution: Commodore's Fortune
+        // +20% base critical chance
+        // Default critical chance: 0.05
+        0.25,
+        2.0,
+        37.0,
         1.0,
-        0,
-        40,
-        1.5,
-        0.5,
+        1.0,
+        72,
+        12,
+        2.35,
+        0.0,
         vec![
-            Status::heat(22.0),
-            Status::radiation(22.0 * 0.6), // Sister Element
+            Status::impact(7.5),
+            Status::puncture(60.0),
+            Status::slash(7.5),
+            // Frenzy buff
+            Status::toxin(75.0),
         ],
     );
 
-    let tenet_cycron_riven_disposition = 0.70;
+    let dual_toxocyst_riven_disposition = 1.35;
 
     let riven_mods: Vec<SecondaryMod> = {
-        let disposition = tenet_cycron_riven_disposition;
+        let disposition = dual_toxocyst_riven_disposition;
         let mut riven_mods = Vec::new();
-        riven_mods.extend(generate_secondary_riven_combinations(disposition, 2, true));
-        riven_mods.extend(generate_secondary_riven_combinations(disposition, 3, true));
+        riven_mods.extend(generate_secondary_riven_combinations(disposition, 2, false));
+        riven_mods.extend(generate_secondary_riven_combinations(disposition, 3, false));
         riven_mods
     };
-
-    // let riven_mods = {
-    //     let disposition = tenet_cycron_riven_disposition;
-    //     let mut riven_mods = Vec::new();
-    //     riven_mods.extend(generate_melee_riven_combinations(disposition, 2, 1.2375));
-    //     riven_mods.extend(generate_melee_riven_combinations(disposition, 3, 0.9375));
-    //     riven_mods
-    // };
 
     let status_mods: Vec<SecondaryMod> = vec![
         // Cold
@@ -53,18 +53,18 @@ fn main() {
         SecondaryMod::Frostbite,
         SecondaryMod::IceStorm,
         // Electricity
-        // SecondaryMod::PrimedConvulsion,
-        // SecondaryMod::Convulsion,
-        // SecondaryMod::Jolt,
+        SecondaryMod::PrimedConvulsion,
+        SecondaryMod::Convulsion,
+        SecondaryMod::Jolt,
         // Heat
-        // SecondaryMod::PrimedHeatedCharge,
-        // SecondaryMod::HeatedCharge,
-        // SecondaryMod::Scorch,
+        SecondaryMod::PrimedHeatedCharge,
+        SecondaryMod::HeatedCharge,
+        SecondaryMod::Scorch,
         // Toxin
         SecondaryMod::PathogenRounds,
         SecondaryMod::PistolPestilence,
         // Radiation
-        // SecondaryMod::AcceleratedIsotope,
+        SecondaryMod::AcceleratedIsotope,
     ];
 
     let other_mods: Vec<SecondaryMod> = vec![
@@ -72,43 +72,36 @@ fn main() {
         SecondaryMod::HornetStrike,
         SecondaryMod::AugurPact,
         // Critical Chance
+        SecondaryMod::GalvanizedCrosshairs(5),
         SecondaryMod::CreepingBullseye,
         SecondaryMod::PrimedPistolGambit,
-        // SecondaryMod::PistolGambit,
         // Critical Damage
         SecondaryMod::PrimedTargetCracker,
-        // SecondaryMod::TargetCracker,
         SecondaryMod::HollowPoint,
         SecondaryMod::SharpenedBullet,
+        // Status Chance
+        SecondaryMod::GalvanizedShot(0.2),
         // Multishot
         SecondaryMod::GalvanizedDiffusion(4),
-        // SecondaryMod::BarrelDiffusion,
         SecondaryMod::LethalTorrent,
         // Fire Rate
         SecondaryMod::AnemicAgility,
         SecondaryMod::Gunslinger,
+        // Faction Bonus
+        SecondaryMod::PrimedExpelGrineer,
     ];
 
-    let obligatory_mods: Vec<SecondaryMod> = vec![
-        // MeleeMod::BerserkerFury,
-        // MeleeMod::BloodRush(12),
-        // MeleeMod::WeepingWounds(12),
-        // MeleeMod::ConditionOverload(0.2),
-        SecondaryMod::PrimedHeatedCharge,
-        // SecondaryMod::PistolPestilence,
-        // SecondaryMod::PrimedPistolGambit,
-        // SecondaryMod::PrimedTargetCracker,
-        // SecondaryMod::GalvanizedDiffusion(4),
-        // SecondaryMod::LethalTorrent,
-    ];
+    let obligatory_mods: Vec<SecondaryMod> = vec![];
 
     let (best_build, best_score) = bruteforce_secondary(
-        tenet_cycron,
+        dual_toxocyst,
         status_mods,
         other_mods,
         riven_mods,
         obligatory_mods,
-        cascadia_flare_dps,
+        raw_damage,
+        48,
+        true,
     );
 
     println!("Best build: {:?}", best_build);
@@ -125,6 +118,7 @@ fn main() {
 /// * `riven_mods` - The list of riven mods
 /// * `obligatory_mods` - The list of obligatory mods
 /// * `score_fn` - The function to calculate the score
+/// * `max_cost` - The maximum cost of the build
 ///
 /// # Returns
 ///
@@ -132,18 +126,24 @@ fn main() {
 fn bruteforce_secondary(
     secondary: Secondary,
     status_mods: Vec<SecondaryMod>,
-    other_mods: Vec<SecondaryMod>,
+    mut other_mods: Vec<SecondaryMod>,
     riven_mods: Vec<SecondaryMod>,
     obligatory_mods: Vec<SecondaryMod>,
     score_fn: fn(&Secondary) -> f32,
+    max_cost: u8,
+    has_reactor: bool,
 ) -> (Vec<SecondaryMod>, f32) {
+    // Remove the duplicate mods
+    other_mods.retain(|mod_| !status_mods.contains(mod_));
+    other_mods.retain(|mod_| !obligatory_mods.contains(mod_));
+
     let mut best_build = Vec::new();
     let mut best_score = 0.0;
 
     for n in 1..=3 {
         let mod_combinations = ModCombinations::new(
             n,
-            8,
+            7,
             &status_mods,
             &other_mods,
             &riven_mods,
@@ -155,6 +155,10 @@ fn bruteforce_secondary(
 
             for modifier in build.iter() {
                 weapon.add_modifier(modifier.clone().into());
+            }
+
+            if weapon.cost(has_reactor) > max_cost {
+                continue;
             }
 
             let score = score_fn(&weapon);
@@ -183,6 +187,7 @@ fn bruteforce_secondary(
 /// * `riven_mods` - The list of riven mods
 /// * `obligatory_mods` - The list of obligatory mods
 /// * `score_fn` - The function to calculate the score
+/// * `max_cost` - The maximum cost of the build
 ///
 /// # Returns
 ///
@@ -192,18 +197,24 @@ fn bruteforce_melee(
     animation_time: f32,
     combo_hits: f32,
     status_mods: Vec<MeleeMod>,
-    other_mods: Vec<MeleeMod>,
+    mut other_mods: Vec<MeleeMod>,
     riven_mods: Vec<MeleeMod>,
     obligatory_mods: Vec<MeleeMod>,
     score_fn: fn(&Melee, f32, f32) -> f32,
+    max_cost: u8,
+    has_reactor: bool,
 ) -> (Vec<MeleeMod>, f32) {
+    // Remove the duplicate mods
+    other_mods.retain(|mod_| !status_mods.contains(mod_));
+    other_mods.retain(|mod_| !obligatory_mods.contains(mod_));
+
     let mut best_build = Vec::new();
     let mut best_score = 0.0;
 
     for n in 1..=3 {
         let mod_combinations = ModCombinations::new(
             n,
-            7,
+            8,
             &status_mods,
             &other_mods,
             &riven_mods,
@@ -215,6 +226,10 @@ fn bruteforce_melee(
 
             for modifier in build.iter() {
                 weapon.add_modifier(modifier.clone().into());
+            }
+
+            if weapon.cost(has_reactor) > max_cost {
+                continue;
             }
 
             let score = score_fn(&weapon, animation_time, combo_hits);
