@@ -10,4 +10,8 @@ impl Modifier for MagnumForce {
     }
 
     // -0.55 accuracy
+
+    fn cost(&self, _context: &dyn Weapon) -> u8 {
+        14
+    }
 }

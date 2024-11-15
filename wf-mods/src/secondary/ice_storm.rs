@@ -12,4 +12,8 @@ impl Modifier for IceStorm {
     fn status_list(&self, _context: &dyn Weapon) -> Vec<Status> {
         vec![Status::cold(0.4)]
     }
+
+    fn cost(&self, _context: &dyn Weapon) -> u8 {
+        9
+    }
 }

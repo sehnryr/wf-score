@@ -12,4 +12,8 @@ impl Modifier for CreepingBullseye {
     fn fire_rate(&self, _context: &dyn Weapon) -> f32 {
         -0.2
     }
+
+    fn cost(&self, _context: &dyn Weapon) -> u8 {
+        9
+    }
 }

@@ -83,6 +83,10 @@ impl Modifier for SecondaryRiven {
     fn status_list(&self, _context: &dyn Weapon) -> Vec<Status> {
         self.status_list.clone()
     }
+
+    fn cost(&self, _context: &dyn Weapon) -> u8 {
+        18
+    }
 }
 
 impl std::fmt::Debug for SecondaryRiven {

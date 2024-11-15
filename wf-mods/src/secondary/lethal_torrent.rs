@@ -12,4 +12,8 @@ impl Modifier for LethalTorrent {
     fn fire_rate(&self, _context: &dyn Weapon) -> f32 {
         0.6
     }
+
+    fn cost(&self, _context: &dyn Weapon) -> u8 {
+        11
+    }
 }
