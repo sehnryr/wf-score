@@ -42,8 +42,8 @@ fn main() {
     let riven_mods: Vec<SecondaryMod> = {
         let disposition = dual_toxocyst_riven_disposition;
         let mut riven_mods = Vec::new();
-        riven_mods.extend(generate_secondary_riven_combinations(disposition, 2, false));
-        riven_mods.extend(generate_secondary_riven_combinations(disposition, 3, false));
+        riven_mods.extend(generate_secondary_riven_combinations(disposition, 2, true));
+        riven_mods.extend(generate_secondary_riven_combinations(disposition, 3, true));
         riven_mods
     };
 
