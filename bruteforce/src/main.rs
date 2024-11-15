@@ -125,7 +125,7 @@ fn main() {
 /// A tuple containing the best build and the score relative to the score function
 fn bruteforce_secondary(
     secondary: Secondary,
-    status_mods: Vec<SecondaryMod>,
+    mut status_mods: Vec<SecondaryMod>,
     mut other_mods: Vec<SecondaryMod>,
     riven_mods: Vec<SecondaryMod>,
     obligatory_mods: Vec<SecondaryMod>,
@@ -134,16 +134,16 @@ fn bruteforce_secondary(
     has_reactor: bool,
 ) -> (Vec<SecondaryMod>, f32) {
     // Remove the duplicate mods
-    other_mods.retain(|mod_| !status_mods.contains(mod_));
+    status_mods.retain(|mod_| !obligatory_mods.contains(mod_));
     other_mods.retain(|mod_| !obligatory_mods.contains(mod_));
 
     let mut best_build = Vec::new();
     let mut best_score = 0.0;
 
-    for n in 1..=3 {
+    for n in 0..=3 {
         let mod_combinations = ModCombinations::new(
             n,
-            7,
+            8,
             &status_mods,
             &other_mods,
             &riven_mods,
@@ -196,7 +196,7 @@ fn bruteforce_melee(
     melee: Melee,
     animation_time: f32,
     combo_hits: f32,
-    status_mods: Vec<MeleeMod>,
+    mut status_mods: Vec<MeleeMod>,
     mut other_mods: Vec<MeleeMod>,
     riven_mods: Vec<MeleeMod>,
     obligatory_mods: Vec<MeleeMod>,
@@ -205,13 +205,13 @@ fn bruteforce_melee(
     has_reactor: bool,
 ) -> (Vec<MeleeMod>, f32) {
     // Remove the duplicate mods
-    other_mods.retain(|mod_| !status_mods.contains(mod_));
+    status_mods.retain(|mod_| !obligatory_mods.contains(mod_));
     other_mods.retain(|mod_| !obligatory_mods.contains(mod_));
 
     let mut best_build = Vec::new();
     let mut best_score = 0.0;
 
-    for n in 1..=3 {
+    for n in 0..=3 {
         let mod_combinations = ModCombinations::new(
             n,
             8,
