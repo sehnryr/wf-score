@@ -1,13 +1,20 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse, spanned::Spanned, ItemImpl};
+use syn::spanned::Spanned;
+use syn::{
+    ItemImpl,
+    parse,
+};
 
-/// This is a procedural macro that fills in the missing implementations of the `Modifier` for
-/// the implementor of the `Modifier`.
+/// This is a procedural macro that fills in the missing implementations of the
+/// `Modifier` for the implementor of the `Modifier`.
 ///
 /// The missing implementations are filled in with `Default::default()`.
 #[proc_macro_attribute]
-pub fn modifier(_: TokenStream, item: TokenStream) -> TokenStream {
+pub fn modifier(
+    _: TokenStream,
+    item: TokenStream,
+) -> TokenStream {
     let item_impl: ItemImpl = parse(item).expect("expected an item implementation");
 
     // Get the implemented functions of the item implementation.
@@ -19,7 +26,8 @@ pub fn modifier(_: TokenStream, item: TokenStream) -> TokenStream {
         }
     });
 
-    // Get the functions that are required to be implemented by the item implementation.
+    // Get the functions that are required to be implemented by the item
+    // implementation.
     let required_functions = vec![
         ("damage", quote!(f32)),
         ("anti_faction", quote!(f32)),
@@ -36,7 +44,8 @@ pub fn modifier(_: TokenStream, item: TokenStream) -> TokenStream {
         ("cost", quote!(u8)),
     ];
 
-    // Get the missing functions that are required to be implemented by the item implementation.
+    // Get the missing functions that are required to be implemented by the item
+    // implementation.
     let missing_functions = required_functions.iter().filter(|required_function| {
         !implemented_functions
             .clone()
@@ -66,7 +75,8 @@ pub fn modifier(_: TokenStream, item: TokenStream) -> TokenStream {
         }
     });
 
-    // Generate the final implementation of the item implementation with the default implementations.
+    // Generate the final implementation of the item implementation with the default
+    // implementations.
     let item_impl_ident = &item_impl.self_ty;
     let final_item_impl = quote! {
         impl Modifier for #item_impl_ident {

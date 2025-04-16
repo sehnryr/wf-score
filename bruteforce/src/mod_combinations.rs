@@ -2,7 +2,12 @@ use std::iter::Iterator;
 use std::slice::Iter;
 use std::sync::Arc;
 
-use itertools::{Combinations, Itertools, Permutations, Product};
+use itertools::{
+    Combinations,
+    Itertools,
+    Permutations,
+    Product,
+};
 use wf_stats::Modifier;
 
 pub struct ModCombinations<'a, T>

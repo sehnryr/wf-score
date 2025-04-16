@@ -5,7 +5,10 @@ pub struct FocusRadon;
 
 #[modifier]
 impl Modifier for FocusRadon {
-    fn status_list(&self, _context: &dyn Weapon) -> Vec<Status> {
+    fn status_list(
+        &self,
+        _context: &dyn Weapon,
+    ) -> Vec<Status> {
         vec![Status::radiation(0.6)]
     }
 }

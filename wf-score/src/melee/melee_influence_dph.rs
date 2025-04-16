@@ -1,13 +1,18 @@
 use wf_stats::*;
 
-/// Calculate the average damage per hit of the melee influence arcane on a melee weapon
+/// Calculate the average damage per hit of the melee influence arcane on a
+/// melee weapon
 ///
 /// # Arguments
 ///
 /// * `melee` - The melee weapon
 /// * `animation_time` - The animation time of the combo from the stance mod
 /// * `combo_hits` - The number of hits in the combo
-pub fn melee_influence_dph(melee: &Melee, _animation_time: f32, _combo_hits: f32) -> f32 {
+pub fn melee_influence_dph(
+    melee: &Melee,
+    _animation_time: f32,
+    _combo_hits: f32,
+) -> f32 {
     let damage_bonus = melee.damage_bonus();
     let critical_chance = melee.critical_chance();
     let critical_multiplier = melee.critical_multiplier();

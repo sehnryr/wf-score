@@ -7,7 +7,10 @@ pub struct BloodRush {
 
 #[modifier]
 impl Modifier for BloodRush {
-    fn critical_chance(&self, _context: &dyn Weapon) -> f32 {
+    fn critical_chance(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         0.4 * (self.combo_multiplier - 1).max(1) as f32
     }
 }

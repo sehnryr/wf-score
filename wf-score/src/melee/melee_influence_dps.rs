@@ -1,13 +1,18 @@
 use wf_stats::*;
 
-/// Calculate the average damage per second of the melee influence arcane on a melee weapon
+/// Calculate the average damage per second of the melee influence arcane on a
+/// melee weapon
 ///
 /// # Arguments
 ///
 /// * `melee` - The melee weapon
 /// * `animation_time` - The animation time of the combo from the stance mod
 /// * `combo_hits` - The number of hits in the combo
-pub fn melee_influence_dps(melee: &Melee, animation_time: f32, combo_hits: f32) -> f32 {
+pub fn melee_influence_dps(
+    melee: &Melee,
+    animation_time: f32,
+    combo_hits: f32,
+) -> f32 {
     let total_animation_time = animation_time / melee.attack_speed();
     let hits_per_second = combo_hits / total_animation_time;
 

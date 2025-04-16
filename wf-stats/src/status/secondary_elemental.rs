@@ -20,7 +20,10 @@ impl SecondaryElemental {
         }
     }
 
-    pub fn set_damage(&mut self, damage: f32) {
+    pub fn set_damage(
+        &mut self,
+        damage: f32,
+    ) {
         match self {
             Self::Blast(blast) => *blast = damage,
             Self::Corrosive(corrosive) => *corrosive = damage,

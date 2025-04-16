@@ -133,9 +133,15 @@ impl Into<Arc<dyn Modifier>> for SecondaryMod {
             Self::PrimedPistolGambit => Arc::new(PrimedPistolGambit {}),
             Self::SharpenedBullet => Arc::new(SharpenedBullet {}),
             Self::BarrelDiffusion => Arc::new(BarrelDiffusion {}),
-            Self::GalvanizedCrosshairs(stacks) => Arc::new(GalvanizedCrosshairs { stacks }),
-            Self::GalvanizedDiffusion(stacks) => Arc::new(GalvanizedDiffusion { stacks }),
-            Self::GalvanizedShot(threshold) => Arc::new(GalvanizedShot { threshold }),
+            Self::GalvanizedCrosshairs(stacks) => Arc::new(GalvanizedCrosshairs {
+                stacks,
+            }),
+            Self::GalvanizedDiffusion(stacks) => Arc::new(GalvanizedDiffusion {
+                stacks,
+            }),
+            Self::GalvanizedShot(threshold) => Arc::new(GalvanizedShot {
+                threshold,
+            }),
             Self::Gunslinger => Arc::new(Gunslinger {}),
             Self::Jolt => Arc::new(Jolt {}),
             Self::PistolGambit => Arc::new(PistolGambit {}),

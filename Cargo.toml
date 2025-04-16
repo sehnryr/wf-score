@@ -1,3 +1,11 @@
+[package]
+name = "warframe-builder"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
 [workspace]
 resolver = "3"
 members = [
@@ -21,3 +29,29 @@ wf-modifier-proc-macro = { path = "wf-modifier-proc-macro" }
 wf-mods = { path = "wf-mods" }
 wf-score = { path = "wf-score" }
 wf-stats = { path = "wf-stats" }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[dependencies]
+dioxus = "0.6.3"
+thiserror = "2.0.12"
+wf-stats.workspace = true
+
+[target.'cfg(not(target_family = "wasm"))'.dependencies]
+dirs = "6.0.0"
+
+[features]
+default = ["desktop"]
+desktop = ["dioxus/desktop"]
+
+[profile]
+[profile.android-dev]
+inherits = "dev"
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
