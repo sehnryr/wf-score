@@ -7,11 +7,12 @@ pub struct GladiatorMight {
 
 #[modifier]
 impl Modifier for GladiatorMight {
-    fn set(&self) -> Option<&str> {
-        Some("Gladiator")
-    }
+    fn set(&self) -> Option<&str> { Some("Gladiator") }
 
-    fn critical_chance(&self, context: &dyn Weapon) -> f32 {
+    fn critical_chance(
+        &self,
+        context: &dyn Weapon,
+    ) -> f32 {
         let mut set_count = 0;
         for modifier in context.modifier_list() {
             if modifier.set() == Some("Gladiator") {
@@ -24,7 +25,10 @@ impl Modifier for GladiatorMight {
         0.1 * (self.combo_multiplier - 1).max(1) as f32 * (1.0 + set_bonus)
     }
 
-    fn critical_multiplier(&self, _context: &dyn Weapon) -> f32 {
+    fn critical_multiplier(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         0.6
     }
 }

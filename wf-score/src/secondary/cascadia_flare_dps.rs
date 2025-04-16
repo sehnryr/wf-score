@@ -19,8 +19,9 @@ pub fn cascadia_flare_dps(secondary: &Secondary) -> f32 {
         .and_then(|e| Some(e.damage()))
         .unwrap_or(0.0);
 
-    // Cascadia Flare procs on heat status, although the timer is only 10s, it is refreshed on each proc.
-    // We can assume that it will be up 100% of the time.
+    // Cascadia Flare procs on heat status, although the timer is only 10s, it is
+    // refreshed on each proc. We can assume that it will be up 100% of the
+    // time.
 
     let cascadia_flare_damage_bonus = if heat_damage > 0.0 { 0.12 * 40.0 } else { 0.0 };
     let damage_bonus = damage_bonus + cascadia_flare_damage_bonus;

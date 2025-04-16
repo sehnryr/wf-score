@@ -32,33 +32,54 @@ impl MeleeRiven {
 
 #[modifier]
 impl Modifier for MeleeRiven {
-    fn damage(&self, _context: &dyn Weapon) -> f32 {
+    fn damage(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.damage
     }
 
-    fn critical_chance(&self, _context: &dyn Weapon) -> f32 {
+    fn critical_chance(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.critical_chance
     }
 
-    fn critical_multiplier(&self, _context: &dyn Weapon) -> f32 {
+    fn critical_multiplier(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.critical_multiplier
     }
 
-    fn status_chance(&self, _context: &dyn Weapon) -> f32 {
+    fn status_chance(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.status_chance
     }
 
-    fn attack_speed(&self, _context: &dyn Weapon) -> f32 {
+    fn attack_speed(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.attack_speed
     }
 
-    fn status_list(&self, _context: &dyn Weapon) -> Vec<Status> {
+    fn status_list(
+        &self,
+        _context: &dyn Weapon,
+    ) -> Vec<Status> {
         self.status_list.clone()
     }
 }
 
 impl std::fmt::Debug for MeleeRiven {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(
+        &self,
+        f: &mut std::fmt::Formatter<'_>,
+    ) -> std::fmt::Result {
         let mut f = f.debug_struct("MeleeRiven");
         if self.damage != 0.0 {
             f.field("damage", &self.damage);
@@ -85,7 +106,10 @@ impl std::fmt::Debug for MeleeRiven {
 impl std::ops::Mul<f32> for MeleeRiven {
     type Output = Self;
 
-    fn mul(mut self, rhs: f32) -> Self::Output {
+    fn mul(
+        mut self,
+        rhs: f32,
+    ) -> Self::Output {
         Self {
             damage: self.damage * rhs,
             critical_chance: self.critical_chance * rhs,

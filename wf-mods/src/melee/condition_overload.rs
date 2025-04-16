@@ -2,13 +2,17 @@ use super::common::*;
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub struct ConditionOverload {
-    /// The % of the total damage that a status must have to count as a condition
+    /// The % of the total damage that a status must have to count as a
+    /// condition
     pub threshold: f32,
 }
 
 #[modifier]
 impl Modifier for ConditionOverload {
-    fn damage(&self, context: &dyn Weapon) -> f32 {
+    fn damage(
+        &self,
+        context: &dyn Weapon,
+    ) -> f32 {
         let status_list = context.status_list();
         let total_damage = status_list.damage();
 

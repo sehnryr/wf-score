@@ -83,7 +83,8 @@ impl<'a> FromIterator<&'a SecondaryRivenAttribute> for SecondaryRiven {
 ///
 /// * `disposition` - The riven disposition of the weapon
 /// * `attribute_count` - The number of attributes in the riven
-/// * `has_negative` - Whether the riven has a negative attribute (used for bonus calculation)
+/// * `has_negative` - Whether the riven has a negative attribute (used for
+///   bonus calculation)
 pub fn generate_secondary_riven_combinations(
     disposition: f32,
     attribute_count: usize,

@@ -2,8 +2,15 @@ use std::sync::Arc;
 
 use derivative::Derivative;
 
-use crate::modifier::{Modifier, WeaponModifiers};
-use crate::status::{Physical, Status, StatusesImpl};
+use crate::modifier::{
+    Modifier,
+    WeaponModifiers,
+};
+use crate::status::{
+    Physical,
+    Status,
+    StatusesImpl,
+};
 use crate::weapon::Weapon;
 
 #[derive(Derivative, Default, Clone)]
@@ -36,13 +43,14 @@ impl Melee {
         }
     }
 
-    fn base_damage(&self) -> f32 {
-        self.status_list.iter().map(|status| status.damage()).sum()
-    }
+    fn base_damage(&self) -> f32 { self.status_list.iter().map(|status| status.damage()).sum() }
 }
 
 impl WeaponModifiers for Melee {
-    fn add_modifier(&mut self, modifier: Arc<dyn Modifier>) {
+    fn add_modifier(
+        &mut self,
+        modifier: Arc<dyn Modifier>,
+    ) {
         self.modifier_list.push(modifier);
     }
 }
@@ -51,29 +59,17 @@ impl Weapon for Melee
 where
     Self: Default,
 {
-    fn fire_rate(&self) -> f32 {
-        Default::default()
-    }
+    fn fire_rate(&self) -> f32 { Default::default() }
 
-    fn ammo_maximum(&self) -> usize {
-        Default::default()
-    }
+    fn ammo_maximum(&self) -> usize { Default::default() }
 
-    fn magazine_capacity(&self) -> usize {
-        Default::default()
-    }
+    fn magazine_capacity(&self) -> usize { Default::default() }
 
-    fn multishot(&self) -> f32 {
-        Default::default()
-    }
+    fn multishot(&self) -> f32 { Default::default() }
 
-    fn reload_speed(&self) -> f32 {
-        Default::default()
-    }
+    fn reload_speed(&self) -> f32 { Default::default() }
 
-    fn reload_delay(&self) -> f32 {
-        Default::default()
-    }
+    fn reload_delay(&self) -> f32 { Default::default() }
 
     fn damage_bonus(&self) -> f32 {
         let mut damage_bonus = 0.0;
@@ -163,11 +159,12 @@ where
         status_list.merge()
     }
 
-    fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>> {
-        &self.modifier_list
-    }
+    fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>> { &self.modifier_list }
 
-    fn cost(&self, has_reactor: bool) -> u8 {
+    fn cost(
+        &self,
+        has_reactor: bool,
+    ) -> u8 {
         let mut cost = 0;
         for modifier in self.modifier_list.iter() {
             cost += match has_reactor {

@@ -64,7 +64,8 @@ pub enum MeleeMod {
     /// The combo multiplier of the weapon
     BloodRush(u8),
 
-    /// The % of the total damage that a status must have to count as a condition
+    /// The % of the total damage that a status must have to count as a
+    /// condition
     ConditionOverload(f32),
     FeverStrike,
     FocusEnergy,
@@ -98,12 +99,18 @@ impl Into<Arc<dyn Modifier>> for MeleeMod {
     fn into(self) -> Arc<dyn Modifier> {
         match self {
             Self::BerserkerFury => Arc::new(BerserkerFury {}),
-            Self::BloodRush(combo_multiplier) => Arc::new(BloodRush { combo_multiplier }),
-            Self::ConditionOverload(threshold) => Arc::new(ConditionOverload { threshold }),
+            Self::BloodRush(combo_multiplier) => Arc::new(BloodRush {
+                combo_multiplier,
+            }),
+            Self::ConditionOverload(threshold) => Arc::new(ConditionOverload {
+                threshold,
+            }),
             Self::FeverStrike => Arc::new(FeverStrike {}),
             Self::FocusEnergy => Arc::new(FocusEnergy {}),
             Self::FocusRadon => Arc::new(FocusRadon {}),
-            Self::GladiatorMight(combo_multiplier) => Arc::new(GladiatorMight { combo_multiplier }),
+            Self::GladiatorMight(combo_multiplier) => Arc::new(GladiatorMight {
+                combo_multiplier,
+            }),
             Self::MoltenImpact => Arc::new(MoltenImpact {}),
             Self::NorthWind => Arc::new(NorthWind {}),
             Self::OrganShatter => Arc::new(OrganShatter {}),
@@ -119,7 +126,9 @@ impl Into<Arc<dyn Modifier>> for MeleeMod {
             Self::VirulentScourge => Arc::new(VirulentScourge {}),
             Self::VolcanicEdge => Arc::new(VolcanicEdge {}),
             Self::VoltaicStrike => Arc::new(VoltaicStrike {}),
-            Self::WeepingWounds(combo_multiplier) => Arc::new(WeepingWounds { combo_multiplier }),
+            Self::WeepingWounds(combo_multiplier) => Arc::new(WeepingWounds {
+                combo_multiplier,
+            }),
             Self::Riven(riven) => Arc::new(riven),
         }
     }

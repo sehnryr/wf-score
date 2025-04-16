@@ -5,7 +5,10 @@ pub struct MoltenImpact;
 
 #[modifier]
 impl Modifier for MoltenImpact {
-    fn status_list(&self, _context: &dyn Weapon) -> Vec<Status> {
+    fn status_list(
+        &self,
+        _context: &dyn Weapon,
+    ) -> Vec<Status> {
         vec![Status::heat(0.9)]
     }
 }

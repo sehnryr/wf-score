@@ -1,8 +1,9 @@
 [package]
 name = "wf-modifier-proc-macro"
-version.workspace = true
+version = "0.1.0"
 edition.workspace = true
 publish.workspace = true
+license = "MIT"
 
 [lib]
 proc-macro = true

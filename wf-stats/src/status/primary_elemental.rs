@@ -16,7 +16,10 @@ impl PrimaryElemental {
         }
     }
 
-    pub fn set_damage(&mut self, damage: f32) {
+    pub fn set_damage(
+        &mut self,
+        damage: f32,
+    ) {
         match self {
             Self::Cold(cold) => *cold = damage,
             Self::Electricity(electricity) => *electricity = damage,
