@@ -17,7 +17,7 @@ publish = false
 unsafe_code = "forbid"
 
 [package]
-name = "app"
+name = "warframe-builder"
 version = "0.1.0"
 authors = ["Youn Mélois <youn@melois.dev>"]
 edition.workspace = true
@@ -26,6 +26,10 @@ license = "AGPL-3.0-or-later"
 
 [dependencies]
 dioxus = "0.6.3"
+thiserror = "2.0.12"
+
+[target.'cfg(not(target_family = "wasm"))'.dependencies]
+dirs = "6.0.0"
 
 [features]
 default = ["desktop"]
