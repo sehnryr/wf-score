@@ -27,13 +27,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "app"
-version = "0.1.0"
-dependencies = [
- "dioxus",
-]
-
-[[package]]
 name = "ashpd"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -364,7 +357,7 @@ dependencies = [
 [[package]]
 name = "const-serialize"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "const-serialize-macro",
  "serde",
@@ -373,7 +366,7 @@ dependencies = [
 [[package]]
 name = "const-serialize-macro"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -656,7 +649,7 @@ dependencies = [
 [[package]]
 name = "dioxus"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-cli-config",
  "dioxus-config-macro",
@@ -680,7 +673,7 @@ dependencies = [
 [[package]]
 name = "dioxus-asset-resolver"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-cli-config",
  "http",
@@ -696,7 +689,7 @@ dependencies = [
 [[package]]
 name = "dioxus-cli-config"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "wasm-bindgen",
 ]
@@ -704,7 +697,7 @@ dependencies = [
 [[package]]
 name = "dioxus-config-macro"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -713,12 +706,12 @@ dependencies = [
 [[package]]
 name = "dioxus-config-macros"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 
 [[package]]
 name = "dioxus-core"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "const_format",
  "dioxus-core-types",
@@ -738,7 +731,7 @@ dependencies = [
 [[package]]
 name = "dioxus-core-macro"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "convert_case 0.8.0",
  "dioxus-rsx",
@@ -750,7 +743,7 @@ dependencies = [
 [[package]]
 name = "dioxus-core-types"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "once_cell",
 ]
@@ -758,7 +751,7 @@ dependencies = [
 [[package]]
 name = "dioxus-desktop"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "async-trait",
  "base64",
@@ -808,7 +801,7 @@ dependencies = [
 [[package]]
 name = "dioxus-devtools"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "dioxus-devtools-types",
@@ -823,7 +816,7 @@ dependencies = [
 [[package]]
 name = "dioxus-devtools-types"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "serde",
@@ -832,7 +825,7 @@ dependencies = [
 [[package]]
 name = "dioxus-document"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "dioxus-core-macro",
@@ -850,7 +843,7 @@ dependencies = [
 [[package]]
 name = "dioxus-fullstack"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "base64",
  "bytes",
@@ -875,7 +868,7 @@ dependencies = [
 [[package]]
 name = "dioxus-fullstack-hooks"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "dioxus-fullstack-protocol",
@@ -888,7 +881,7 @@ dependencies = [
 [[package]]
 name = "dioxus-fullstack-protocol"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "base64",
  "ciborium",
@@ -900,7 +893,7 @@ dependencies = [
 [[package]]
 name = "dioxus-history"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "tracing",
@@ -909,7 +902,7 @@ dependencies = [
 [[package]]
 name = "dioxus-hooks"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "dioxus-signals",
@@ -925,7 +918,7 @@ dependencies = [
 [[package]]
 name = "dioxus-html"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "async-trait",
  "dioxus-core",
@@ -949,7 +942,7 @@ dependencies = [
 [[package]]
 name = "dioxus-html-internal-macro"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "convert_case 0.8.0",
  "proc-macro2",
@@ -960,7 +953,7 @@ dependencies = [
 [[package]]
 name = "dioxus-interpreter-js"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "dioxus-core-types",
@@ -979,7 +972,7 @@ dependencies = [
 [[package]]
 name = "dioxus-lib"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-config-macro",
  "dioxus-core",
@@ -996,7 +989,7 @@ dependencies = [
 [[package]]
 name = "dioxus-logger"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "console_error_panic_hook",
  "dioxus-cli-config",
@@ -1008,7 +1001,7 @@ dependencies = [
 [[package]]
 name = "dioxus-rsx"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "proc-macro2",
  "proc-macro2-diagnostics",
@@ -1019,7 +1012,7 @@ dependencies = [
 [[package]]
 name = "dioxus-signals"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dioxus-core",
  "futures-channel",
@@ -1035,7 +1028,7 @@ dependencies = [
 [[package]]
 name = "dioxus-web"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "async-trait",
  "dioxus-cli-config",
@@ -1066,7 +1059,7 @@ dependencies = [
 [[package]]
 name = "dioxus_server_macro"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1575,7 +1568,7 @@ dependencies = [
 [[package]]
 name = "generational-box"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "parking_lot",
  "tracing",
@@ -2254,7 +2247,7 @@ dependencies = [
 [[package]]
 name = "lazy-js-bundle"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 
 [[package]]
 name = "lazy_static"
@@ -2394,7 +2387,7 @@ dependencies = [
 [[package]]
 name = "manganis"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "const-serialize",
  "manganis-core",
@@ -2404,7 +2397,7 @@ dependencies = [
 [[package]]
 name = "manganis-core"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "const-serialize",
  "dioxus-cli-config",
@@ -2415,7 +2408,7 @@ dependencies = [
 [[package]]
 name = "manganis-macro"
 version = "0.6.3"
-source = "git+https://github.com/DioxusLabs/dioxus.git?rev=1001d78c7fbf717df50e9209513b03676e03635c#1001d78c7fbf717df50e9209513b03676e03635c"
+source = "git+https://github.com/sehnryr/dioxus.git?branch=chore%2Fupdate-wry-dep#ba65b76a2567c3e7f0df75fe0277886e2f1a25ae"
 dependencies = [
  "dunce",
  "macro-string",
@@ -3915,8 +3908,8 @@ dependencies = [
  "tao-macros",
  "unicode-segmentation",
  "url",
- "windows",
- "windows-core",
+ "windows 0.60.0",
+ "windows-core 0.60.1",
  "windows-version",
  "x11-dl",
 ]
@@ -4421,6 +4414,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "warframe-builder"
+version = "0.1.0"
+dependencies = [
+ "dioxus",
+ "dirs",
+ "thiserror 2.0.12",
+]
+
+[[package]]
 name = "warnings"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4620,15 +4622,15 @@ dependencies = [
 
 [[package]]
 name = "webview2-com"
-version = "0.36.0"
+version = "0.37.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0d606f600e5272b514dbb66539dd068211cc20155be8d3958201b4b5bd79ed3"
+checksum = "b542b5cfbd9618c46c2784e4d41ba218c336ac70d44c55e47b251033e7d85601"
 dependencies = [
  "webview2-com-macros",
  "webview2-com-sys",
- "windows",
- "windows-core",
- "windows-implement",
+ "windows 0.61.1",
+ "windows-core 0.61.0",
+ "windows-implement 0.60.0",
  "windows-interface",
 ]
 
@@ -4645,13 +4647,13 @@ dependencies = [
 
 [[package]]
 name = "webview2-com-sys"
-version = "0.36.0"
+version = "0.37.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bfb27fccd3c27f68e9a6af1bcf48c2d82534b8675b83608a4d81446d095a17ac"
+checksum = "8ae2d11c4a686e4409659d7891791254cf9286d3cfe0eef54df1523533d22295"
 dependencies = [
  "thiserror 2.0.12",
- "windows",
- "windows-core",
+ "windows 0.61.1",
+ "windows-core 0.61.0",
 ]
 
 [[package]]
@@ -4724,11 +4726,24 @@ version = "0.60.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ddf874e74c7a99773e62b1c671427abf01a425e77c3d3fb9fb1e4883ea934529"
 dependencies = [
- "windows-collections",
- "windows-core",
- "windows-future",
+ "windows-collections 0.1.1",
+ "windows-core 0.60.1",
+ "windows-future 0.1.1",
  "windows-link",
- "windows-numerics",
+ "windows-numerics 0.1.1",
+]
+
+[[package]]
+name = "windows"
+version = "0.61.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c5ee8f3d025738cb02bad7868bbb5f8a6327501e870bf51f1b455b0a2454a419"
+dependencies = [
+ "windows-collections 0.2.0",
+ "windows-core 0.61.0",
+ "windows-future 0.2.0",
+ "windows-link",
+ "windows-numerics 0.2.0",
 ]
 
 [[package]]
@@ -4737,7 +4752,16 @@ version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5467f79cc1ba3f52ebb2ed41dbb459b8e7db636cc3429458d9a852e15bc24dec"
 dependencies = [
- "windows-core",
+ "windows-core 0.60.1",
+]
+
+[[package]]
+name = "windows-collections"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3beeceb5e5cfd9eb1d76b381630e82c4241ccd0d27f1a39ed41b2760b255c5e8"
+dependencies = [
+ "windows-core 0.61.0",
 ]
 
 [[package]]
@@ -4746,11 +4770,24 @@ version = "0.60.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ca21a92a9cae9bf4ccae5cf8368dce0837100ddf6e6d57936749e85f152f6247"
 dependencies = [
- "windows-implement",
+ "windows-implement 0.59.0",
  "windows-interface",
  "windows-link",
  "windows-result",
- "windows-strings",
+ "windows-strings 0.3.1",
+]
+
+[[package]]
+name = "windows-core"
+version = "0.61.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4763c1de310c86d75a878046489e2e5ba02c649d185f21c67d4cf8a56d098980"
+dependencies = [
+ "windows-implement 0.60.0",
+ "windows-interface",
+ "windows-link",
+ "windows-result",
+ "windows-strings 0.4.0",
 ]
 
 [[package]]
@@ -4759,7 +4796,17 @@ version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a787db4595e7eb80239b74ce8babfb1363d8e343ab072f2ffe901400c03349f0"
 dependencies = [
- "windows-core",
+ "windows-core 0.60.1",
+ "windows-link",
+]
+
+[[package]]
+name = "windows-future"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a1d6bbefcb7b60acd19828e1bc965da6fcf18a7e39490c5f8be71e54a19ba32"
+dependencies = [
+ "windows-core 0.61.0",
  "windows-link",
 ]
 
@@ -4768,6 +4815,17 @@ name = "windows-implement"
 version = "0.59.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "83577b051e2f49a058c308f17f273b570a6a758386fc291b5f6a934dd84e48c1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.100",
+]
+
+[[package]]
+name = "windows-implement"
+version = "0.60.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a47fddd13af08290e67f4acabf4b459f647552718f683a7b415d290ac744a836"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4797,7 +4855,17 @@ version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "005dea54e2f6499f2cee279b8f703b3cf3b5734a2d8d21867c8f44003182eeed"
 dependencies = [
- "windows-core",
+ "windows-core 0.60.1",
+ "windows-link",
+]
+
+[[package]]
+name = "windows-numerics"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9150af68066c4c5c07ddc0ce30421554771e528bde427614c61038bc2c92c2b1"
+dependencies = [
+ "windows-core 0.61.0",
  "windows-link",
 ]
 
@@ -4808,7 +4876,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4286ad90ddb45071efd1a66dfa43eb02dd0dfbae1545ad6cc3c51cf34d7e8ba3"
 dependencies = [
  "windows-result",
- "windows-strings",
+ "windows-strings 0.3.1",
  "windows-targets 0.53.0",
 ]
 
@@ -4826,6 +4894,15 @@ name = "windows-strings"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "87fa48cc5d406560701792be122a10132491cff9d0aeb23583cc2dcafc847319"
+dependencies = [
+ "windows-link",
+]
+
+[[package]]
+name = "windows-strings"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a2ba9642430ee452d5a7aa78d72907ebe8cfda358e8cb7918a2050581322f97"
 dependencies = [
  "windows-link",
 ]
@@ -5092,9 +5169,8 @@ checksum = "1e9df38ee2d2c3c5948ea468a8406ff0db0b29ae1ffde1bcf20ef305bcc95c51"
 
 [[package]]
 name = "wry"
-version = "0.50.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b19b78efae8b853c6c817e8752fc1dbf9cab8a8ffe9c30f399bd750ccf0f0730"
+version = "0.51.2"
+source = "git+https://github.com/tauri-apps/wry.git?rev=refs%2Fpull%2F1547%2Fhead#055b95445528016ff46d77beb267b3594c88c110"
 dependencies = [
  "base64",
  "block2",
@@ -5128,8 +5204,8 @@ dependencies = [
  "webkit2gtk",
  "webkit2gtk-sys",
  "webview2-com",
- "windows",
- "windows-core",
+ "windows 0.61.1",
+ "windows-core 0.61.0",
  "windows-version",
  "x11-dl",
 ]

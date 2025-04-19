@@ -1,0 +1,6 @@
+[application]
+name = "Warframe Builder"
+
+[bundle]
+identifier = "app.warframe-builder"
+publisher = "Youn Mélois"

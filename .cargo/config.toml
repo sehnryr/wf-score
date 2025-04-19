@@ -1,2 +1,3 @@
 [patch.crates-io]
-dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "1001d78c7fbf717df50e9209513b03676e03635c" }
+dioxus = { git = "https://github.com/sehnryr/dioxus.git", branch = "chore/update-wry-dep" }
+wry = { git = "https://github.com/tauri-apps/wry.git", rev = "refs/pull/1547/head" }
