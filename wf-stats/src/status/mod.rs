@@ -13,7 +13,95 @@ pub enum Status {
     SecondaryElemental(SecondaryElemental),
 }
 
+macro_rules! damage {
+    ($d:expr) => {
+        $d
+    };
+    () => {
+        _
+    };
+}
+
+macro_rules! variant {
+    (Physical) => { Status::Physical(_) };
+    (PrimaryElemental) => { Status::PrimaryElemental(_) };
+    (SecondaryElemental) => { Status::SecondaryElemental(_) };
+    // Physical
+    (Impact $(,$d:expr)?) => { Status::Physical(Physical::Impact(damage!($($d)?))) };
+    (Puncture $(,$d:expr)?) => { Status::Physical(Physical::Puncture(damage!($($d)?))) };
+    (Slash $(,$d:expr)?) => { Status::Physical(Physical::Slash(damage!($($d)?))) };
+    // Primary Elemental
+    (Cold $(,$d:expr)?) => { Status::PrimaryElemental(PrimaryElemental::Cold(damage!($($d)?))) };
+    (Electricity $(,$d:expr)?) => { Status::PrimaryElemental(PrimaryElemental::Electricity(damage!($($d)?))) };
+    (Heat $(,$d:expr)?) => { Status::PrimaryElemental(PrimaryElemental::Heat(damage!($($d)?))) };
+    (Toxin $(,$d:expr)?) => { Status::PrimaryElemental(PrimaryElemental::Toxin(damage!($($d)?))) };
+    // Secondary Elemental
+    (Blast $(,$d:expr)?) => { Status::SecondaryElemental(SecondaryElemental::Blast(damage!($($d)?))) };
+    (Corrosive $(,$d:expr)?) => { Status::SecondaryElemental(SecondaryElemental::Corrosive(damage!($($d)?))) };
+    (Gas $(,$d:expr)?) => { Status::SecondaryElemental(SecondaryElemental::Gas(damage!($($d)?))) };
+    (Magnetic $(,$d:expr)?) => { Status::SecondaryElemental(SecondaryElemental::Magnetic(damage!($($d)?))) };
+    (Radiation $(,$d:expr)?) => { Status::SecondaryElemental(SecondaryElemental::Radiation(damage!($($d)?))) };
+    (Viral $(,$d:expr)?) => { Status::SecondaryElemental(SecondaryElemental::Viral(damage!($($d)?))) };
+}
+
+macro_rules! is_status {
+    ($($is_status:ident ( $variant:ident ) ),+ $(,)?) => {
+        $(
+            pub const fn $is_status(&self) -> bool { matches!(*self, variant!($variant)) }
+        )+
+    };
+}
+
+macro_rules! set_status {
+    ($($set_status:ident ( $variant:ident ) ),+ $(,)?) => {
+        $(
+            pub const fn $set_status(damage: f32) -> Self { variant!($variant, damage) }
+        )+
+    };
+}
+
 impl Status {
+    is_status!(
+        is_physical(Physical),
+        is_primary_elemental(PrimaryElemental),
+        is_secondary_elemental(SecondaryElemental),
+        // Physical
+        is_impact(Impact),
+        is_puncture(Puncture),
+        is_slash(Slash),
+        // Primary Elemental
+        is_cold(Cold),
+        is_electricity(Electricity),
+        is_heat(Heat),
+        is_toxin(Toxin),
+        // Secondary Elemental
+        is_blast(Blast),
+        is_corrosive(Corrosive),
+        is_gas(Gas),
+        is_magnetic(Magnetic),
+        is_radiation(Radiation),
+        is_viral(Viral),
+    );
+
+    set_status!(
+        // Physical
+        impact(Impact),
+        puncture(Puncture),
+        slash(Slash),
+        // Primary Elemental
+        cold(Cold),
+        electricity(Electricity),
+        heat(Heat),
+        toxin(Toxin),
+        // Secondary Elemental
+        blast(Blast),
+        corrosive(Corrosive),
+        gas(Gas),
+        magnetic(Magnetic),
+        radiation(Radiation),
+        viral(Viral),
+    );
+
     pub fn damage(&self) -> f32 {
         match self {
             Self::Physical(physical) => physical.damage(),
@@ -31,46 +119,6 @@ impl Status {
             Self::PrimaryElemental(elemental) => elemental.set_damage(damage),
             Self::SecondaryElemental(secondary) => secondary.set_damage(damage),
         }
-    }
-
-    pub const fn impact(impact: f32) -> Self { Self::Physical(Physical::Impact(impact)) }
-
-    pub const fn puncture(puncture: f32) -> Self { Self::Physical(Physical::Puncture(puncture)) }
-
-    pub const fn slash(slash: f32) -> Self { Self::Physical(Physical::Slash(slash)) }
-
-    pub const fn cold(cold: f32) -> Self { Self::PrimaryElemental(PrimaryElemental::Cold(cold)) }
-
-    pub const fn electricity(electricity: f32) -> Self {
-        Self::PrimaryElemental(PrimaryElemental::Electricity(electricity))
-    }
-
-    pub const fn heat(heat: f32) -> Self { Self::PrimaryElemental(PrimaryElemental::Heat(heat)) }
-
-    pub const fn toxin(toxin: f32) -> Self {
-        Self::PrimaryElemental(PrimaryElemental::Toxin(toxin))
-    }
-
-    pub const fn blast(blast: f32) -> Self {
-        Self::SecondaryElemental(SecondaryElemental::Blast(blast))
-    }
-
-    pub const fn corrosive(corrosive: f32) -> Self {
-        Self::SecondaryElemental(SecondaryElemental::Corrosive(corrosive))
-    }
-
-    pub const fn gas(gas: f32) -> Self { Self::SecondaryElemental(SecondaryElemental::Gas(gas)) }
-
-    pub const fn magnetic(magnetic: f32) -> Self {
-        Self::SecondaryElemental(SecondaryElemental::Magnetic(magnetic))
-    }
-
-    pub const fn radiation(radiation: f32) -> Self {
-        Self::SecondaryElemental(SecondaryElemental::Radiation(radiation))
-    }
-
-    pub const fn viral(viral: f32) -> Self {
-        Self::SecondaryElemental(SecondaryElemental::Viral(viral))
     }
 }
 
@@ -185,7 +233,7 @@ impl StatusesImpl for Vec<Status> {
                         }
                     }
                 },
-                _ => {}
+                Status::SecondaryElemental(_) => {}
             }
 
             for index in merged_indexes.iter().rev() {
@@ -201,13 +249,7 @@ impl StatusesImpl for Vec<Status> {
         while !statuses.is_empty() {
             let mut status = statuses.remove(0);
 
-            let index = statuses.iter().position(|status| {
-                if let Status::PrimaryElemental(_) = status {
-                    true
-                } else {
-                    false
-                }
-            });
+            let index = statuses.iter().position(|status| status.is_physical());
 
             match status {
                 Status::PrimaryElemental(elemental) => match elemental {
@@ -225,9 +267,9 @@ impl StatusesImpl for Vec<Status> {
                                     PrimaryElemental::Toxin(toxin) => {
                                         status = Status::viral(elemental.damage() + toxin);
                                     }
-                                    _ => {}
+                                    PrimaryElemental::Cold(_) => {}
                                 },
-                                _ => {}
+                                Status::Physical(_) | Status::SecondaryElemental(_) => {}
                             }
                         }
                     }
@@ -245,9 +287,9 @@ impl StatusesImpl for Vec<Status> {
                                     PrimaryElemental::Toxin(toxin) => {
                                         status = Status::corrosive(elemental.damage() + toxin);
                                     }
-                                    _ => {}
+                                    PrimaryElemental::Electricity(_) => {}
                                 },
-                                _ => {}
+                                Status::Physical(_) | Status::SecondaryElemental(_) => {}
                             }
                         }
                     }
@@ -266,9 +308,9 @@ impl StatusesImpl for Vec<Status> {
                                     PrimaryElemental::Toxin(toxin) => {
                                         status = Status::gas(elemental.damage() + toxin);
                                     }
-                                    _ => {}
+                                    PrimaryElemental::Heat(_) => {}
                                 },
-                                _ => {}
+                                Status::Physical(_) | Status::SecondaryElemental(_) => {}
                             }
                         }
                     }
@@ -287,14 +329,14 @@ impl StatusesImpl for Vec<Status> {
                                     PrimaryElemental::Heat(heat) => {
                                         status = Status::gas(elemental.damage() + heat);
                                     }
-                                    _ => {}
+                                    PrimaryElemental::Toxin(_) => {}
                                 },
-                                _ => {}
+                                Status::Physical(_) | Status::SecondaryElemental(_) => {}
                             }
                         }
                     }
                 },
-                _ => {}
+                Status::Physical(_) | Status::SecondaryElemental(_) => {}
             }
 
             merged_statuses.push(status);
@@ -373,7 +415,7 @@ impl StatusesImpl for Vec<Status> {
                         }
                     }
                 },
-                _ => {}
+                Status::Physical(_) | Status::PrimaryElemental(_) => {}
             }
 
             for index in merged_indexes.iter().rev() {
@@ -391,7 +433,7 @@ impl StatusesImpl for Vec<Status> {
     fn physical(&self) -> Vec<Status> {
         let mut physicals = Vec::new();
         for status in self.iter() {
-            if let Status::Physical(_) = status {
+            if status.is_physical() {
                 physicals.push(*status);
             }
         }
@@ -402,7 +444,7 @@ impl StatusesImpl for Vec<Status> {
     fn elemental(&self) -> Vec<Status> {
         let mut elementals = Vec::new();
         for status in self.iter() {
-            if let Status::PrimaryElemental(_) = status {
+            if status.is_primary_elemental() {
                 elementals.push(*status);
             }
         }
@@ -413,7 +455,7 @@ impl StatusesImpl for Vec<Status> {
     fn secondary(&self) -> Vec<Status> {
         let mut secondaries = Vec::new();
         for status in self.iter() {
-            if let Status::SecondaryElemental(_) = status {
+            if status.is_secondary_elemental() {
                 secondaries.push(*status);
             }
         }
@@ -423,7 +465,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn impact(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::Physical(Physical::Impact(_)) = status {
+            if status.is_impact() {
                 return Some(*status);
             }
         }
@@ -433,7 +475,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn puncture(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::Physical(Physical::Puncture(_)) = status {
+            if status.is_puncture() {
                 return Some(*status);
             }
         }
@@ -443,7 +485,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn slash(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::Physical(Physical::Slash(_)) = status {
+            if status.is_slash() {
                 return Some(*status);
             }
         }
@@ -453,7 +495,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn cold(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::PrimaryElemental(PrimaryElemental::Cold(_)) = status {
+            if status.is_cold() {
                 return Some(*status);
             }
         }
@@ -463,7 +505,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn electricity(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::PrimaryElemental(PrimaryElemental::Electricity(_)) = status {
+            if status.is_electricity() {
                 return Some(*status);
             }
         }
@@ -473,7 +515,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn heat(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::PrimaryElemental(PrimaryElemental::Heat(_)) = status {
+            if status.is_heat() {
                 return Some(*status);
             }
         }
@@ -483,7 +525,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn toxin(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::PrimaryElemental(PrimaryElemental::Toxin(_)) = status {
+            if status.is_toxin() {
                 return Some(*status);
             }
         }
@@ -493,7 +535,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn blast(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::SecondaryElemental(SecondaryElemental::Blast(_)) = status {
+            if status.is_blast() {
                 return Some(*status);
             }
         }
@@ -503,7 +545,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn corrosive(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::SecondaryElemental(SecondaryElemental::Corrosive(_)) = status {
+            if status.is_corrosive() {
                 return Some(*status);
             }
         }
@@ -513,7 +555,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn gas(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::SecondaryElemental(SecondaryElemental::Gas(_)) = status {
+            if status.is_gas() {
                 return Some(*status);
             }
         }
@@ -523,7 +565,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn magnetic(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::SecondaryElemental(SecondaryElemental::Magnetic(_)) = status {
+            if status.is_magnetic() {
                 return Some(*status);
             }
         }
@@ -533,7 +575,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn radiation(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::SecondaryElemental(SecondaryElemental::Radiation(_)) = status {
+            if status.is_radiation() {
                 return Some(*status);
             }
         }
@@ -543,7 +585,7 @@ impl StatusesImpl for Vec<Status> {
 
     fn viral(&self) -> Option<Status> {
         for status in self.iter() {
-            if let Status::SecondaryElemental(SecondaryElemental::Viral(_)) = status {
+            if status.is_viral() {
                 return Some(*status);
             }
         }

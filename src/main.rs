@@ -11,10 +11,7 @@ use dioxus::desktop::{
 };
 use dioxus::prelude::*;
 use wf_stats::{
-    Physical,
-    PrimaryElemental,
     Secondary,
-    SecondaryElemental,
     Status,
 };
 
@@ -125,73 +122,33 @@ fn App() -> Element {
                             status_list.write()[i] = status;
                         },
                         option { disabled: true, "Physical" }
-                        option {
-                            selected: matches!(status, Status::Physical(Physical::Impact(_))),
-                            value: "impact",
-                            "Impact"
-                        }
-                        option {
-                            selected: matches!(status, Status::Physical(Physical::Puncture(_))),
-                            value: "puncture",
-                            "Puncture"
-                        }
-                        option {
-                            selected: matches!(status, Status::Physical(Physical::Slash(_))),
-                            value: "slash",
-                            "Slash"
-                        }
+                        option { selected: status.is_impact(), value: "impact", "Impact" }
+                        option { selected: status.is_puncture(), value: "puncture", "Puncture" }
+                        option { selected: status.is_slash(), value: "slash", "Slash" }
                         option { disabled: true, "Primary Elemental" }
+                        option { selected: status.is_cold(), value: "cold", "Cold" }
                         option {
-                            selected: matches!(status, Status::PrimaryElemental(PrimaryElemental::Cold(_))),
-                            value: "cold",
-                            "Cold"
-                        }
-                        option {
-                            selected: matches!(status, Status::PrimaryElemental(PrimaryElemental::Electricity(_))),
+                            selected: status.is_electricity(),
                             value: "electricity",
                             "Electricity"
                         }
-                        option {
-                            selected: matches!(status, Status::PrimaryElemental(PrimaryElemental::Heat(_))),
-                            value: "heat",
-                            "Heat"
-                        }
-                        option {
-                            selected: matches!(status, Status::PrimaryElemental(PrimaryElemental::Toxin(_))),
-                            value: "toxin",
-                            "Toxin"
-                        }
+                        option { selected: status.is_heat(), value: "heat", "Heat" }
+                        option { selected: status.is_toxin(), value: "toxin", "Toxin" }
                         option { disabled: true, "Secondary Elemental" }
+                        option { selected: status.is_blast(), value: "blast", "Blast" }
                         option {
-                            selected: matches!(status, Status::SecondaryElemental(SecondaryElemental::Blast(_))),
-                            value: "blast",
-                            "Blast"
-                        }
-                        option {
-                            selected: matches!(status, Status::SecondaryElemental(SecondaryElemental::Corrosive(_))),
+                            selected: status.is_corrosive(),
                             value: "corrosive",
                             "Corrosive"
                         }
+                        option { selected: status.is_gas(), value: "gas", "Gas" }
+                        option { selected: status.is_magnetic(), value: "magnetic", "Magnetic" }
                         option {
-                            selected: matches!(status, Status::SecondaryElemental(SecondaryElemental::Gas(_))),
-                            value: "gas",
-                            "Gas"
-                        }
-                        option {
-                            selected: matches!(status, Status::SecondaryElemental(SecondaryElemental::Magnetic(_))),
-                            value: "magnetic",
-                            "Magnetic"
-                        }
-                        option {
-                            selected: matches!(status, Status::SecondaryElemental(SecondaryElemental::Radiation(_))),
+                            selected: status.is_radiation(),
                             value: "radiation",
                             "Radiation"
                         }
-                        option {
-                            selected: matches!(status, Status::SecondaryElemental(SecondaryElemental::Viral(_))),
-                            value: "viral",
-                            "Viral"
-                        }
+                        option { selected: status.is_viral(), value: "viral", "Viral" }
                     }
                     input {
                         onchange: move |event| {
