@@ -97,80 +97,11 @@ fn App() -> Element {
         label { "Status List" }
         button { onclick: move |_| status_list.push(Status::impact(0.0)), "Add Status" }
         ul {
-            for (i , mut status) in status_list.read().iter().cloned().enumerate() {
-                li {
-                    select {
-                        oninput: move |event| {
-                            let status_type: String = event.value();
-                            let status_damage: f32 = status.damage();
-                            let status = match status_type.as_str() {
-                                "impact" => Status::impact(status_damage),
-                                "puncture" => Status::puncture(status_damage),
-                                "slash" => Status::slash(status_damage),
-                                "cold" => Status::cold(status_damage),
-                                "electricity" => Status::electricity(status_damage),
-                                "heat" => Status::heat(status_damage),
-                                "toxin" => Status::toxin(status_damage),
-                                "blast" => Status::blast(status_damage),
-                                "corrosive" => Status::corrosive(status_damage),
-                                "gas" => Status::gas(status_damage),
-                                "magnetic" => Status::magnetic(status_damage),
-                                "radiation" => Status::radiation(status_damage),
-                                "viral" => Status::viral(status_damage),
-                                _ => return,
-                            };
-                            status_list.write()[i] = status;
-                        },
-                        option { disabled: true, "Physical" }
-                        option { selected: status.is_impact(), value: "impact", "Impact" }
-                        option { selected: status.is_puncture(), value: "puncture", "Puncture" }
-                        option { selected: status.is_slash(), value: "slash", "Slash" }
-                        option { disabled: true, "Primary Elemental" }
-                        option { selected: status.is_cold(), value: "cold", "Cold" }
-                        option {
-                            selected: status.is_electricity(),
-                            value: "electricity",
-                            "Electricity"
-                        }
-                        option { selected: status.is_heat(), value: "heat", "Heat" }
-                        option { selected: status.is_toxin(), value: "toxin", "Toxin" }
-                        option { disabled: true, "Secondary Elemental" }
-                        option { selected: status.is_blast(), value: "blast", "Blast" }
-                        option {
-                            selected: status.is_corrosive(),
-                            value: "corrosive",
-                            "Corrosive"
-                        }
-                        option { selected: status.is_gas(), value: "gas", "Gas" }
-                        option { selected: status.is_magnetic(), value: "magnetic", "Magnetic" }
-                        option {
-                            selected: status.is_radiation(),
-                            value: "radiation",
-                            "Radiation"
-                        }
-                        option { selected: status.is_viral(), value: "viral", "Viral" }
-                    }
-                    input {
-                        onchange: move |event| {
-                            let status_damage: f32 = event.value().parse().unwrap_or_default();
-                            status.set_damage(status_damage);
-                            status_list.write()[i] = status;
-                        },
-                        r#type: "number",
-                        placeholder: "0.00",
-                        step: "0.01",
-                    }
-                    button {
-                        onclick: move |_| {
-                            status_list.remove(i);
-                        },
-                        r#type: "button",
-                        "Delete"
-                    }
-                }
+            for (i , status) in status_list.read().iter().cloned().enumerate() {
+                StatusListItem { list: status_list, index: i, item: status }
             }
         }
-        div { "{stats:#?}" }
+        pre { "{stats:#?}" }
     }
 }
 
@@ -184,6 +115,74 @@ fn Input<T: FromStr + Default + 'static>(mut value: Signal<T>) -> Element {
             step: if TypeId::of::<T>() == TypeId::of::<f32>() { "0.01" } else if TypeId::of::<T>() == TypeId::of::<usize>() { "1" },
             min: if TypeId::of::<T>() == TypeId::of::<f32>() { "-1000.0" } else if TypeId::of::<T>() == TypeId::of::<usize>() { "0" },
             max: if TypeId::of::<T>() == TypeId::of::<f32>() { "1000.0" } else if TypeId::of::<T>() == TypeId::of::<usize>() { "{usize::MAX}" },
+        }
+    }
+}
+
+#[component]
+fn StatusListItem(
+    list: Signal<Vec<Status>>,
+    index: usize,
+    item: Status,
+) -> Element {
+    rsx! {
+        li {
+            select {
+                oninput: move |event| {
+                    let status_type: String = event.value();
+                    let status_damage: f32 = item.damage();
+                    let status = match status_type.as_str() {
+                        "impact" => Status::impact(status_damage),
+                        "puncture" => Status::puncture(status_damage),
+                        "slash" => Status::slash(status_damage),
+                        "cold" => Status::cold(status_damage),
+                        "electricity" => Status::electricity(status_damage),
+                        "heat" => Status::heat(status_damage),
+                        "toxin" => Status::toxin(status_damage),
+                        "blast" => Status::blast(status_damage),
+                        "corrosive" => Status::corrosive(status_damage),
+                        "gas" => Status::gas(status_damage),
+                        "magnetic" => Status::magnetic(status_damage),
+                        "radiation" => Status::radiation(status_damage),
+                        "viral" => Status::viral(status_damage),
+                        _ => return,
+                    };
+                    list.write()[index] = status;
+                },
+                option { disabled: true, "Physical" }
+                option { selected: item.is_impact(), value: "impact", "Impact" }
+                option { selected: item.is_puncture(), value: "puncture", "Puncture" }
+                option { selected: item.is_slash(), value: "slash", "Slash" }
+                option { disabled: true, "Primary Elemental" }
+                option { selected: item.is_cold(), value: "cold", "Cold" }
+                option { selected: item.is_electricity(), value: "electricity", "Electricity" }
+                option { selected: item.is_heat(), value: "heat", "Heat" }
+                option { selected: item.is_toxin(), value: "toxin", "Toxin" }
+                option { disabled: true, "Secondary Elemental" }
+                option { selected: item.is_blast(), value: "blast", "Blast" }
+                option { selected: item.is_corrosive(), value: "corrosive", "Corrosive" }
+                option { selected: item.is_gas(), value: "gas", "Gas" }
+                option { selected: item.is_magnetic(), value: "magnetic", "Magnetic" }
+                option { selected: item.is_radiation(), value: "radiation", "Radiation" }
+                option { selected: item.is_viral(), value: "viral", "Viral" }
+            }
+            input {
+                onchange: move |event| {
+                    let status_damage: f32 = event.value().parse().unwrap_or_default();
+                    item.set_damage(status_damage);
+                    list.write()[index] = item;
+                },
+                r#type: "number",
+                placeholder: "0.00",
+                step: "0.01",
+            }
+            button {
+                onclick: move |_| {
+                    list.remove(index);
+                },
+                r#type: "button",
+                "Delete"
+            }
         }
     }
 }
