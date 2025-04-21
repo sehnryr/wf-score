@@ -67,41 +67,46 @@ fn App() -> Element {
     });
 
     rsx! {
-        label { "Critical Chance" }
-        Input { value: critical_chance }
-        br {}
-        label { "Critical Damage" }
-        Input { value: critical_damage }
-        br {}
-        label { "Status Chance" }
-        Input { value: status_chance }
-        br {}
-        label { "Fire Rate" }
-        Input { value: fire_rate }
-        br {}
-        label { "Multishot" }
-        Input { value: multishot }
-        br {}
-        label { "Ammo Maximum" }
-        Input { value: ammo_maximum }
-        br {}
-        label { "Magazine Size" }
-        Input { value: magazine_size }
-        br {}
-        label { "Reload Time" }
-        Input { value: reload_time }
-        br {}
-        label { "Reload Delay" }
-        Input { value: reload_delay }
-        br {}
-        label { "Status List" }
-        button { onclick: move |_| status_list.push(Status::impact(0.0)), "Add Status" }
-        ul {
-            for (i , status) in status_list.read().iter().cloned().enumerate() {
-                StatusListItem { list: status_list, index: i, item: status }
+        div {
+            display: "flex",
+            div {
+                label { "Critical Chance" }
+                Input { value: critical_chance }
+                br {}
+                label { "Critical Damage" }
+                Input { value: critical_damage }
+                br {}
+                label { "Status Chance" }
+                Input { value: status_chance }
+                br {}
+                label { "Fire Rate" }
+                Input { value: fire_rate }
+                br {}
+                label { "Multishot" }
+                Input { value: multishot }
+                br {}
+                label { "Ammo Maximum" }
+                Input { value: ammo_maximum }
+                br {}
+                label { "Magazine Size" }
+                Input { value: magazine_size }
+                br {}
+                label { "Reload Time" }
+                Input { value: reload_time }
+                br {}
+                label { "Reload Delay" }
+                Input { value: reload_delay }
+                br {}
+                label { "Status List" }
+                button { onclick: move |_| status_list.push(Status::impact(0.0)), "Add Status" }
+                ul {
+                    for (i , status) in status_list.read().iter().cloned().enumerate() {
+                        StatusListItem { list: status_list, index: i, item: status }
+                    }
+                }
             }
+            pre { "{stats:#?}" }
         }
-        pre { "{stats:#?}" }
     }
 }
 
