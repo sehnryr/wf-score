@@ -4420,6 +4420,7 @@ dependencies = [
  "dioxus",
  "dirs",
  "thiserror 2.0.12",
+ "wf-stats",
 ]
 
 [[package]]
