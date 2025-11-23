@@ -1,15 +1,23 @@
 [workspace]
-resolver = "2"
+resolver = "3"
 members = [
-    "bruteforce",
-    "single-score",
-    "wf-modifier-proc-macro",
-    "wf-mods",
-    "wf-score",
-    "wf-stats",
+  "bruteforce",
+  "single-score",
+  "wf-modifier-proc-macro",
+  "wf-mods",
+  "wf-score",
+  "wf-stats",
 ]
 
 [workspace.package]
-version = "0.1.0"
-edition = "2021"
+authors = ["Youn Mélois <youn@melois.dev>"]
+edition = "2024"
+repository = "https://github.com/sehnryr/wf-score"
+license = "MIT"
 publish = false
+
+[workspace.dependencies]
+wf-modifier-proc-macro = { path = "wf-modifier-proc-macro" }
+wf-mods = { path = "wf-mods" }
+wf-score = { path = "wf-score" }
+wf-stats = { path = "wf-stats" }
