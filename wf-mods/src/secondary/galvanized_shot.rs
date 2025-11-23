@@ -7,7 +7,10 @@ pub struct GalvanizedShot {
 
 #[modifier]
 impl Modifier for GalvanizedShot {
-    fn damage(&self, context: &dyn Weapon) -> f32 {
+    fn damage(
+        &self,
+        context: &dyn Weapon,
+    ) -> f32 {
         let status_list = context.status_list();
         let total_damage = status_list.damage();
 
@@ -21,11 +24,17 @@ impl Modifier for GalvanizedShot {
         0.4 * status_count.min(3) as f32
     }
 
-    fn status_chance(&self, _context: &dyn Weapon) -> f32 {
+    fn status_chance(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         0.8
     }
 
-    fn cost(&self, _context: &dyn Weapon) -> u8 {
+    fn cost(
+        &self,
+        _context: &dyn Weapon,
+    ) -> u8 {
         12
     }
 }

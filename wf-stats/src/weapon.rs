@@ -1,19 +1,21 @@
 use std::sync::Arc;
 
-use crate::status::Status;
 use crate::Modifier;
+use crate::status::Status;
 
 pub trait Weapon {
     /// Returns the damage bonus of the weapon with all modifiers applied.
     fn damage_bonus(&self) -> f32;
 
-    /// Returns the anti-faction multiplier of the weapon with all modifiers applied.
+    /// Returns the anti-faction multiplier of the weapon with all modifiers
+    /// applied.
     fn anti_faction(&self) -> f32;
 
     /// Returns the critical chance of the weapon with all modifiers applied.
     fn critical_chance(&self) -> f32;
 
-    /// Returns the critical multiplier of the weapon with all modifiers applied.
+    /// Returns the critical multiplier of the weapon with all modifiers
+    /// applied.
     fn critical_multiplier(&self) -> f32;
 
     /// Returns the status chance of the weapon with all modifiers applied.
@@ -29,12 +31,14 @@ pub trait Weapon {
     /// Note: This is a primary/secondary-specific modifier.
     fn fire_rate(&self) -> f32;
 
-    /// Returns the additive ammo maximum of the weapon with all modifiers applied.
+    /// Returns the additive ammo maximum of the weapon with all modifiers
+    /// applied.
     ///
     /// Note: This is a primary/secondary-specific modifier.
     fn ammo_maximum(&self) -> usize;
 
-    /// Returns the additive magazine capacity of the weapon with all modifiers applied.
+    /// Returns the additive magazine capacity of the weapon with all modifiers
+    /// applied.
     ///
     /// Note: This is a primary/secondary-specific modifier.
     fn magazine_capacity(&self) -> usize;
@@ -44,7 +48,8 @@ pub trait Weapon {
     /// Note: This is a primary/secondary-specific modifier.
     fn multishot(&self) -> f32;
 
-    /// Returns the additive reload speed of the weapon with all modifiers applied.
+    /// Returns the additive reload speed of the weapon with all modifiers
+    /// applied.
     ///
     /// Note: This is a primary/secondary-specific modifier.
     fn reload_speed(&self) -> f32;
@@ -56,13 +61,17 @@ pub trait Weapon {
 
     /// Returns the final statuses of the weapon.
     ///
-    /// Note: This method is used to calculate the final statuses of the weapon when elemental
-    /// statuses are to be combined (e.g. Heat + Toxin = Gas).
+    /// Note: This method is used to calculate the final statuses of the weapon
+    /// when elemental statuses are to be combined (e.g. Heat + Toxin =
+    /// Gas).
     fn status_list(&self) -> Vec<Status>;
 
     /// Returns the modifiers of the weapon.
     fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>>;
 
     /// Returns the cost of the modifiers
-    fn cost(&self, has_reactor: bool) -> u8;
+    fn cost(
+        &self,
+        has_reactor: bool,
+    ) -> u8;
 }

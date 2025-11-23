@@ -22,7 +22,10 @@ impl Status {
         }
     }
 
-    pub fn set_damage(&mut self, damage: f32) {
+    pub fn set_damage(
+        &mut self,
+        damage: f32,
+    ) {
         match self {
             Self::Physical(physical) => physical.set_damage(damage),
             Self::PrimaryElemental(elemental) => elemental.set_damage(damage),
@@ -30,29 +33,19 @@ impl Status {
         }
     }
 
-    pub const fn impact(impact: f32) -> Self {
-        Self::Physical(Physical::Impact(impact))
-    }
+    pub const fn impact(impact: f32) -> Self { Self::Physical(Physical::Impact(impact)) }
 
-    pub const fn puncture(puncture: f32) -> Self {
-        Self::Physical(Physical::Puncture(puncture))
-    }
+    pub const fn puncture(puncture: f32) -> Self { Self::Physical(Physical::Puncture(puncture)) }
 
-    pub const fn slash(slash: f32) -> Self {
-        Self::Physical(Physical::Slash(slash))
-    }
+    pub const fn slash(slash: f32) -> Self { Self::Physical(Physical::Slash(slash)) }
 
-    pub const fn cold(cold: f32) -> Self {
-        Self::PrimaryElemental(PrimaryElemental::Cold(cold))
-    }
+    pub const fn cold(cold: f32) -> Self { Self::PrimaryElemental(PrimaryElemental::Cold(cold)) }
 
     pub const fn electricity(electricity: f32) -> Self {
         Self::PrimaryElemental(PrimaryElemental::Electricity(electricity))
     }
 
-    pub const fn heat(heat: f32) -> Self {
-        Self::PrimaryElemental(PrimaryElemental::Heat(heat))
-    }
+    pub const fn heat(heat: f32) -> Self { Self::PrimaryElemental(PrimaryElemental::Heat(heat)) }
 
     pub const fn toxin(toxin: f32) -> Self {
         Self::PrimaryElemental(PrimaryElemental::Toxin(toxin))
@@ -66,9 +59,7 @@ impl Status {
         Self::SecondaryElemental(SecondaryElemental::Corrosive(corrosive))
     }
 
-    pub const fn gas(gas: f32) -> Self {
-        Self::SecondaryElemental(SecondaryElemental::Gas(gas))
-    }
+    pub const fn gas(gas: f32) -> Self { Self::SecondaryElemental(SecondaryElemental::Gas(gas)) }
 
     pub const fn magnetic(magnetic: f32) -> Self {
         Self::SecondaryElemental(SecondaryElemental::Magnetic(magnetic))
@@ -84,7 +75,8 @@ impl Status {
 }
 
 pub trait StatusesImpl {
-    /// Merge similar statuses into one and elementals into secondary if possible.
+    /// Merge similar statuses into one and elementals into secondary if
+    /// possible.
     ///
     /// Cold + Electricity = Magnetic
     /// Cold + Heat = Blast
@@ -394,9 +386,7 @@ impl StatusesImpl for Vec<Status> {
         merged_statuses
     }
 
-    fn damage(&self) -> f32 {
-        self.iter().map(|status| status.damage()).sum::<f32>()
-    }
+    fn damage(&self) -> f32 { self.iter().map(|status| status.damage()).sum::<f32>() }
 
     fn physical(&self) -> Vec<Status> {
         let mut physicals = Vec::new();
@@ -565,14 +555,20 @@ impl StatusesImpl for Vec<Status> {
 impl std::ops::Add<f32> for Status {
     type Output = Status;
 
-    fn add(mut self, other: f32) -> Status {
+    fn add(
+        mut self,
+        other: f32,
+    ) -> Status {
         self.set_damage(self.damage() + other);
         self
     }
 }
 
 impl std::ops::AddAssign<f32> for Status {
-    fn add_assign(&mut self, other: f32) {
+    fn add_assign(
+        &mut self,
+        other: f32,
+    ) {
         self.set_damage(self.damage() + other);
     }
 }
@@ -580,14 +576,20 @@ impl std::ops::AddAssign<f32> for Status {
 impl std::ops::Mul<f32> for Status {
     type Output = Status;
 
-    fn mul(mut self, other: f32) -> Status {
+    fn mul(
+        mut self,
+        other: f32,
+    ) -> Status {
         self.set_damage(self.damage() * other);
         self
     }
 }
 
 impl std::ops::MulAssign<f32> for Status {
-    fn mul_assign(&mut self, other: f32) {
+    fn mul_assign(
+        &mut self,
+        other: f32,
+    ) {
         self.set_damage(self.damage() * other);
     }
 }

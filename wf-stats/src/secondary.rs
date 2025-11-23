@@ -2,8 +2,15 @@ use std::sync::Arc;
 
 use derivative::Derivative;
 
-use crate::modifier::{Modifier, WeaponModifiers};
-use crate::status::{Physical, Status, StatusesImpl};
+use crate::modifier::{
+    Modifier,
+    WeaponModifiers,
+};
+use crate::status::{
+    Physical,
+    Status,
+    StatusesImpl,
+};
 use crate::weapon::Weapon;
 
 #[derive(Derivative, Default, Clone)]
@@ -51,13 +58,14 @@ impl Secondary {
         }
     }
 
-    fn base_damage(&self) -> f32 {
-        self.status_list.iter().map(|status| status.damage()).sum()
-    }
+    fn base_damage(&self) -> f32 { self.status_list.iter().map(|status| status.damage()).sum() }
 }
 
 impl WeaponModifiers for Secondary {
-    fn add_modifier(&mut self, modifier: Arc<dyn Modifier>) {
+    fn add_modifier(
+        &mut self,
+        modifier: Arc<dyn Modifier>,
+    ) {
         self.modifier_list.push(modifier);
     }
 }
@@ -66,9 +74,7 @@ impl Weapon for Secondary
 where
     Self: Default,
 {
-    fn attack_speed(&self) -> f32 {
-        Default::default()
-    }
+    fn attack_speed(&self) -> f32 { Default::default() }
 
     fn damage_bonus(&self) -> f32 {
         let mut damage_bonus = 0.0;
@@ -153,9 +159,7 @@ where
         self.reload_time / (1.0 + reload_speed)
     }
 
-    fn reload_delay(&self) -> f32 {
-        self.reload_delay
-    }
+    fn reload_delay(&self) -> f32 { self.reload_delay }
 
     fn status_list(&self) -> Vec<Status> {
         let base_damage = self.base_damage();
@@ -194,11 +198,12 @@ where
         status_list.merge()
     }
 
-    fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>> {
-        &self.modifier_list
-    }
+    fn modifier_list(&self) -> &Vec<Arc<dyn Modifier>> { &self.modifier_list }
 
-    fn cost(&self, has_reactor: bool) -> u8 {
+    fn cost(
+        &self,
+        has_reactor: bool,
+    ) -> u8 {
         let mut cost = 0;
         for modifier in self.modifier_list.iter() {
             cost += match has_reactor {

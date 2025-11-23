@@ -63,7 +63,8 @@ impl<'a> FromIterator<&'a MeleeRivenAttribute> for MeleeRiven {
 ///
 /// * `disposition` - The riven disposition of the weapon
 /// * `attribute_count` - The number of attributes in the riven
-/// * `has_negative` - Whether the riven has a negative attribute (used for bonus calculation)
+/// * `has_negative` - Whether the riven has a negative attribute (used for
+///   bonus calculation)
 pub fn generate_melee_riven_combinations(
     disposition: f32,
     attribute_count: usize,

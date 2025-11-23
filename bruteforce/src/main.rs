@@ -122,7 +122,8 @@ fn main() {
 ///
 /// # Returns
 ///
-/// A tuple containing the best build and the score relative to the score function
+/// A tuple containing the best build and the score relative to the score
+/// function
 fn bruteforce_secondary(
     secondary: Secondary,
     mut status_mods: Vec<SecondaryMod>,
@@ -191,7 +192,8 @@ fn bruteforce_secondary(
 ///
 /// # Returns
 ///
-/// A tuple containing the best build and the score relative to the score function
+/// A tuple containing the best build and the score relative to the score
+/// function
 fn bruteforce_melee(
     melee: Melee,
     animation_time: f32,

@@ -5,11 +5,12 @@ pub struct SacrificialSteel;
 
 #[modifier]
 impl Modifier for SacrificialSteel {
-    fn set(&self) -> Option<&str> {
-        Some("Sacrificial Steel")
-    }
+    fn set(&self) -> Option<&str> { Some("Sacrificial Steel") }
 
-    fn critical_chance(&self, context: &dyn Weapon) -> f32 {
+    fn critical_chance(
+        &self,
+        context: &dyn Weapon,
+    ) -> f32 {
         let mut set_count = 0;
         for modifier in context.modifier_list() {
             if modifier.set() == Some("Sacrificial") {
@@ -19,6 +20,6 @@ impl Modifier for SacrificialSteel {
 
         let set_bonus = 0.25 * (set_count as f32 - 1.0); // Subtract 1 to account for the current mod
 
-        2.2 * (1.0 + set_bonus)  * 2.0
+        2.2 * (1.0 + set_bonus) * 2.0
     }
 }

@@ -44,53 +44,89 @@ impl SecondaryRiven {
 
 #[modifier]
 impl Modifier for SecondaryRiven {
-    fn damage(&self, _context: &dyn Weapon) -> f32 {
+    fn damage(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.damage
     }
 
-    fn critical_chance(&self, _context: &dyn Weapon) -> f32 {
+    fn critical_chance(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.critical_chance
     }
 
-    fn critical_multiplier(&self, _context: &dyn Weapon) -> f32 {
+    fn critical_multiplier(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.critical_multiplier
     }
 
-    fn fire_rate(&self, _context: &dyn Weapon) -> f32 {
+    fn fire_rate(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.fire_rate
     }
 
-    fn ammo_maximum(&self, _context: &dyn Weapon) -> f32 {
+    fn ammo_maximum(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.ammo_maximum
     }
 
-    fn magazine_capacity(&self, _context: &dyn Weapon) -> f32 {
+    fn magazine_capacity(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.magazine_capacity
     }
 
-    fn multishot(&self, _context: &dyn Weapon) -> f32 {
+    fn multishot(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.multishot
     }
 
-    fn reload_speed(&self, _context: &dyn Weapon) -> f32 {
+    fn reload_speed(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.reload_speed
     }
 
-    fn status_chance(&self, _context: &dyn Weapon) -> f32 {
+    fn status_chance(
+        &self,
+        _context: &dyn Weapon,
+    ) -> f32 {
         self.status_chance
     }
 
-    fn status_list(&self, _context: &dyn Weapon) -> Vec<Status> {
+    fn status_list(
+        &self,
+        _context: &dyn Weapon,
+    ) -> Vec<Status> {
         self.status_list.clone()
     }
 
-    fn cost(&self, _context: &dyn Weapon) -> u8 {
+    fn cost(
+        &self,
+        _context: &dyn Weapon,
+    ) -> u8 {
         18
     }
 }
 
 impl std::fmt::Debug for SecondaryRiven {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(
+        &self,
+        f: &mut std::fmt::Formatter<'_>,
+    ) -> std::fmt::Result {
         let mut f = f.debug_struct("SecondaryRiven");
         if self.damage != 0.0 {
             f.field("damage", &self.damage);
@@ -129,7 +165,10 @@ impl std::fmt::Debug for SecondaryRiven {
 impl std::ops::Mul<f32> for SecondaryRiven {
     type Output = Self;
 
-    fn mul(mut self, rhs: f32) -> Self::Output {
+    fn mul(
+        mut self,
+        rhs: f32,
+    ) -> Self::Output {
         Self {
             damage: self.damage * rhs,
             critical_chance: self.critical_chance * rhs,
